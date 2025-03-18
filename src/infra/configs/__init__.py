@@ -1,3 +1,1 @@
-from fastapi import FastAPI
-
-api = FastAPI()
+from .app import *
