@@ -2,13 +2,17 @@ from datetime import datetime
 from typing import Optional
 from sqlmodel import Field, Relationship
 
-from .base_model import BaseModel, AuthModel
-
 from src.domain.enums import MedicineCategory
 
+from sqlmodel import SQLModel
+
+from uuid import uuid4
 
 
-class AddressPharmacy(BaseModel):
+
+class AddressPharmacy(SQLModel, table=True):
+    id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
     street: str = Field(max_length=100)
     neighborhood: str = Field(max_length=100)
     city: str = Field(max_length=100)
@@ -18,24 +22,29 @@ class AddressPharmacy(BaseModel):
     longitude: Optional[float] = Field(default=None)
 
 
-class Pharmacy(BaseModel):
+class Pharmacy(SQLModel, table=True):
+    id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(max_length=100, index=True)
     phone: Optional[str] = Field(max_length=20, default=None)
     opened: bool = Field(default=False)
     opening_hours: Optional[str] = Field(default=None)
-    created_at: datetime = Field(default_factory=datetime.utcnow)
     address_id: str = Field(foreign_key="addresspharmacy.id")
     image_url: Optional[str] = Field(default=None)
     medicines: list["Medicine"] = Relationship(back_populates="pharmacy")
 
 
-class PharmacyImage(BaseModel):
+class PharmacyImage(SQLModel, table=True):
+    id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
     pharmacy_id: str = Field(foreign_key="pharmacy.id")
     image_url: str = Field(max_length=255)
     uploaded_at: datetime = Field(default_factory=datetime.utcnow)
 
 
-class Medicine(BaseModel):
+class Medicine(SQLModel, table=True):
+    id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(max_length=100, index=True)
     description: Optional[str] = Field(default=None, max_length=255)
     price: float = Field(gt=0)
@@ -47,8 +56,12 @@ class Medicine(BaseModel):
     pharmacy: Pharmacy = Relationship(back_populates="medicines")
 
 
-class Pharmacist(AuthModel):
+class Pharmacist(SQLModel, table=True):
+    id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(max_length=100, index=True)
+    password: str = Field(max_length=255)
+    email: str = Field(unique=True, max_length=100)
     email: str = Field(max_length=100, unique=True)
     phone: Optional[str] = Field(max_length=20)
     license_number: str = Field(max_length=50, unique=True)
