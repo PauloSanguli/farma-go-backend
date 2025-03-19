@@ -8,3 +8,4 @@ def create_tables():
         f"postgresql://{getenv('DB-USER')}:{getenv('DB-PASSWORD')}@{getenv('DB-HOST')}:{getenv('DB-PORT')}/{getenv('DB-NAME')}",
     echo=True)
     SQLModel.metadata.create_all(engine)
+    print("Connected")

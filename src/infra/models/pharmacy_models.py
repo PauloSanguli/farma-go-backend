@@ -1,7 +1,6 @@
-from sqlmodel import SQLModel, Field, ForeignKey
-from uuid import uuid4
 from datetime import datetime
 from typing import Optional
+from sqlmodel import Field, Relationship
 
 from .base_model import BaseModel
 
@@ -25,9 +24,31 @@ class Pharmacy(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     address_id: str = Field(foreign_key="addresspharmacy.id")
     image_url: Optional[str] = Field(default=None)
+    medicines: list["Medicine"] = Relationship(back_populates="pharmacy")
 
 
 class PharmacyImage(BaseModel):
     pharmacy_id: str = Field(foreign_key="pharmacy.id")
     image_url: str = Field(max_length=255)
     uploaded_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class Medicine(BaseModel):
+    name: str = Field(max_length=100, index=True)
+    description: Optional[str] = Field(default=None, max_length=255)
+    price: float = Field(gt=0)
+    stock: int = Field(default=0, ge=0)
+    image_url: Optional[str] = Field(default=None, max_length=255)
+    pharmacy_id: str = Field(foreign_key="pharmacy.id")
+
+    pharmacy: Pharmacy = Relationship(back_populates="medicines")
+
+
+class Pharmacist(BaseModel):
+    name: str = Field(max_length=100, index=True)
+    email: str = Field(max_length=100, unique=True)
+    phone: Optional[str] = Field(max_length=20)
+    license_number: str = Field(max_length=50, unique=True)
+    pharmacy_id: str = Field(foreign_key="pharmacy.id")
+
+    pharmacy: Pharmacy = Relationship()
