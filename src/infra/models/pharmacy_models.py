@@ -2,7 +2,9 @@ from datetime import datetime
 from typing import Optional
 from sqlmodel import Field, Relationship
 
-from .base_model import BaseModel
+from .base_model import BaseModel, AuthModel
+
+from src.domain.enums import MedicineCategory
 
 
 
@@ -38,13 +40,14 @@ class Medicine(BaseModel):
     description: Optional[str] = Field(default=None, max_length=255)
     price: float = Field(gt=0)
     stock: int = Field(default=0, ge=0)
+    category: MedicineCategory = Field(sa_column_kwargs={"nullable": False})  
     image_url: Optional[str] = Field(default=None, max_length=255)
     pharmacy_id: str = Field(foreign_key="pharmacy.id")
 
     pharmacy: Pharmacy = Relationship(back_populates="medicines")
 
 
-class Pharmacist(BaseModel):
+class Pharmacist(AuthModel):
     name: str = Field(max_length=100, index=True)
     email: str = Field(max_length=100, unique=True)
     phone: Optional[str] = Field(max_length=20)
