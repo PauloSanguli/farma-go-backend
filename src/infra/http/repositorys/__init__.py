@@ -1,1 +1,2 @@
 from .admin_repositorys import AdminRepository
+from .pharmacy_repository import PharmacyRepository

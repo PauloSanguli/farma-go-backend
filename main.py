@@ -6,11 +6,20 @@ from src.infra.models import (
     Medicine,
     Pharmacy,
     PharmacyImage,
-    AddressPharmacy
+    AddressPharmacy,
 )
+
+from src.infra.http.routes.admin import app as app_admin
+from src.infra.http.routes.pharmacy import app as app_pharmacy
+
 from src.infra.configs import api
 
+from fastapi import APIRouter
 
-if __name__=="__main__":
 
+api.include_router(app_admin)
+api.include_router(app_pharmacy)
+
+
+if __name__ == "__main__":
     uvicorn.run(api, port=3435)

@@ -1,7 +1,6 @@
 from enum import Enum
 
 
-
 class MedicineCategory(str, Enum):
     ANTIBIOTIC = "antibiotic"
     ANALGESIC = "analgesic"

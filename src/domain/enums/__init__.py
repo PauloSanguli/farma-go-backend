@@ -1,4 +1,1 @@
-from .enums import (
-    MedicineCategory,
-    UserRole
-)
+from .enums import MedicineCategory, UserRole

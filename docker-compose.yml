@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  farma-db:
+    image: postgres:latest
+    container_name: farma-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: farma
+    ports:
+      - "5432:5432"
+    volumes:
+      - farma-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  farma-data:
