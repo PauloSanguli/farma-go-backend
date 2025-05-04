@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from src.infra.models import Pharmacy, AddressPharmacy, Pharmacist
 from typing import Dict
+
+from src.infra.models import AddressPharmacy, Pharmacist, Pharmacy
 
 
 class IAdminRepository(ABC):
@@ -14,8 +15,8 @@ class IAdminRepository(ABC):
         NotImplementedError("Method 'regist_pharmacy' should be implemented!")
 
     @abstractmethod
-    def retrieve_pharmacy(pharmacy_id: str) -> Pharmacy:
-        NotImplementedError("Method 'retrieve_pharmacy' should be implemented!")
+    def delete_pharmacy(pharmacy_id: str) -> Pharmacy:
+        NotImplementedError("Method 'delete_pharmacy' should be implemented!")
 
     @abstractmethod
     def list_pharmacys() -> list[Pharmacy]:

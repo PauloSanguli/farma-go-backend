@@ -1,8 +1,10 @@
-from fastapi import FastAPI
-from .database import create_tables
-from dotenv import load_dotenv
 from os import getenv
+
+from dotenv import load_dotenv
+from fastapi import FastAPI
 from sqlmodel import create_engine
+
+from .database import create_tables
 
 api = FastAPI()
 

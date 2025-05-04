@@ -1,11 +1,8 @@
-from src.infra.models import Medicine
-from src.infra.http.repositorys import PharmacyRepository
-
-from fastapi import status
-from fastapi import APIRouter
-
+from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
+from src.infra.http.repositorys import PharmacyRepository
+from src.infra.models import Medicine
 
 app = APIRouter(prefix="/pharmacy")
 

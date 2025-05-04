@@ -1,11 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
-from fastapi import status
 
 from src.infra.http.repositorys import AdminRepository
-
-from src.infra.models import Pharmacy, Pharmacist, AddressPharmacy
-
+from src.infra.models import AddressPharmacy, Pharmacist, Pharmacy
 
 app = APIRouter(prefix="/admin")
 

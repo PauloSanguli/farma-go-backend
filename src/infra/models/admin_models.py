@@ -1,6 +1,7 @@
-from sqlmodel import SQLModel, Field, UUID, Relationship
 from typing import Type
 from uuid import uuid4
+
+from sqlmodel import UUID, Field, Relationship, SQLModel
 
 from src.infra.models.pharmacy_models import Pharmacy
 

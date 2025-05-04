@@ -1,7 +1,8 @@
-from sqlmodel import SQLModel, Field, Relationship
-from typing import Optional, List
-from uuid import uuid4
 from datetime import datetime
+from typing import List, Optional
+from uuid import uuid4
+
+from sqlmodel import Field, Relationship, SQLModel
 
 
 class User(SQLModel, table=True):

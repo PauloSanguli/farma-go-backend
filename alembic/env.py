@@ -1,18 +1,14 @@
+import os
+import sys
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
+from sqlmodel import SQLModel
 
 from alembic import context
 
-from sqlmodel import SQLModel
-
 # from sqlmodel import SQLModel
 from src.infra.models import *
-
-
-import os
-import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 

@@ -1,6 +1,7 @@
 from datetime import datetime
-from typing import Optional, List, Type
+from typing import List, Optional, Type
 from uuid import uuid4
+
 from sqlmodel import Field, Relationship, SQLModel
 
 from src.domain.enums import MedicineCategory

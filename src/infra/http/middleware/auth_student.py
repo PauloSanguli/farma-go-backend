@@ -1,9 +1,7 @@
-from datetime import timedelta, datetime
-
 import os
+from datetime import datetime, timedelta
 
 import jwt
-
 from fastapi import HTTPException
 
 

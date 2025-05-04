@@ -1,5 +1,6 @@
 from os import getenv
-from sqlmodel import SQLModel, create_engine, Session
+
+from sqlmodel import Session, SQLModel, create_engine
 
 
 def create_tables():
