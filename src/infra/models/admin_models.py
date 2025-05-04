@@ -3,9 +3,8 @@ from uuid import uuid4
 
 from sqlmodel import UUID, Field, Relationship, SQLModel
 
-from src.infra.models.pharmacy_models import Pharmacy
-
 from src.domain.security import hash_password
+from src.infra.models.pharmacy_models import Pharmacy
 
 
 class Admin(SQLModel, table=True):
@@ -22,6 +21,4 @@ class Admin(SQLModel, table=True):
     )
 
     def _encrypt_password(self, password: str | None = None) -> None:
-        self.password = hash_password(
-            password or self.password
-        )
+        self.password = hash_password(password or self.password)

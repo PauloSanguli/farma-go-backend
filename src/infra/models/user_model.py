@@ -21,9 +21,7 @@ class User(SQLModel, table=True):
     search_history: List["UserSearchHistory"] = Relationship(back_populates="user")
 
     def _encrypt_password(self, password: str | None = None) -> None:
-        self.password = hash_password(
-            password or self.password
-        )
+        self.password = hash_password(password or self.password)
 
 
 class UserSearchHistory(SQLModel, table=True):

@@ -15,7 +15,7 @@ from src.infra.models import (
     Pharmacist,
     Pharmacy,
     PharmacyImage,
-    User
+    User,
 )
 
 api.include_router(admin_routes_get)

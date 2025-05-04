@@ -19,7 +19,7 @@ class JWTTokenExceptionHandler:
         except:
             cls.set_exception_http("your signature was expired", 401)
         return FIELDS_ACCOUNT_LOGGED
-    
+
     # @classmethod
     # def get_user_logged(cls, x_acess_token: Annotated[str, Header()]):
     #     """metod for get pharmacist logged form token"""
@@ -33,7 +33,7 @@ class JWTTokenExceptionHandler:
     #     except:
     #         cls.set_exception_http("your signature was expired", 401)
     #     return FIELDS_ACCOUNT_LOGGED
-    
+
     # @classmethod
     # def get__logged(cls, x_acess_token: Annotated[str, Header()]):
     #     """metod for get pharmacist logged form token"""
@@ -52,4 +52,3 @@ class JWTTokenExceptionHandler:
     def set_exception_http(cls, detail_exception: str, status_code: int):
         """padronize http exceptions"""
         raise HTTPException(detail=detail_exception, status_code=status_code)
-

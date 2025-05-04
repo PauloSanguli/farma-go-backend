@@ -5,7 +5,6 @@ from uuid import uuid4
 from sqlmodel import Field, Relationship, SQLModel
 
 from src.domain.enums import MedicineCategory
-
 from src.domain.security import hash_password
 
 
@@ -53,9 +52,7 @@ class Pharmacist(SQLModel, table=True):
     pharmacy: Optional["Pharmacy"] = Relationship(back_populates="pharmacists")
 
     def _encrypt_password(self, password: str | None = None) -> None:
-        self.password = hash_password(
-            password or self.password
-        )
+        self.password = hash_password(password or self.password)
 
 
 class Pharmacy(SQLModel, table=True):

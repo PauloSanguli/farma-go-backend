@@ -75,6 +75,6 @@ class AdminRepository(IAdminRepository):
         except IntegrityError as e:
             raise HTTPException(
                 detail=f"An error occured: {e._message()}",
-                status_code=status.HTTP_400_BAD_REQUEST
+                status_code=status.HTTP_400_BAD_REQUEST,
             )
         return {"detail": "Pharmacist was sucessufuly created!"}
