@@ -12,3 +12,11 @@ class IAdminRepository(ABC):
         pharmacist: Pharmacist,
     ) -> Dict[str, str]:
         NotImplementedError("Method 'regist_pharmacy' should be implemented!")
+
+    @abstractmethod
+    def retrieve_pharmacy(pharmacy_id: str) -> Pharmacy:
+        NotImplementedError("Method 'retrieve_pharmacy' should be implemented!")
+
+    @abstractmethod
+    def list_pharmacys() -> list[Pharmacy]:
+        NotImplementedError("Method 'list_pharmacys' should be implemented@")

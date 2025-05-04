@@ -18,14 +18,17 @@ class AdminRepository(IAdminRepository):
         address: AddressPharmacy,
         pharmacist: Pharmacist,
     ) -> dict[str, str]:
-        session: Session = get_session()
+        try:
+            session: Session = get_session()
 
-        stock = Stock(pharmacy_id=pharmacy.id)
+            stock = Stock(pharmacy_id=pharmacy.id)
 
-        pharmacy.address_id = address.id
-        pharmacist.pharmacy_id = pharmacy.id
-        pharmacy.stock_id = stock.id
+            pharmacy.address_id = address.id
+            pharmacist.pharmacy_id = pharmacy.id
+            pharmacy.stock_id = stock.id
 
-        session.add_all([pharmacy, address, pharmacist, stock])
+            session.add_all([pharmacy, address, pharmacist, stock])
+        except Exception as e:
+            return {"error": "Error during creation of pharmacy"}
         session.commit()
         return {"detail": "Pharmacy created with successfuly"}

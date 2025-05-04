@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from src.infra.models import SQLModel
+from sqlmodel import SQLModel
 
 # from sqlmodel import SQLModel
 from src.infra.models import *

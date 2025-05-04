@@ -35,8 +35,15 @@ class Pharmacist(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(max_length=100, index=True)
     password: str = Field(max_length=500)
-    email: str = Field(unique=True, max_length=120)
-    phone: Optional[str] = Field(max_length=20)
+    email: str = Field(
+        unique=True,
+        max_length=120,
+        regex=r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$",
+    )
+    phone: Optional[str] = Field(
+        max_length=20,
+        regex=r"^\+?\d{1,4}?[-.\s]?(\(?\d{1,4}\)?[-.\s]?)?\d{3,5}[-.\s]?\d{4,9}$",
+    )
     license_number: str = Field(max_length=50, unique=True)
 
     pharmacy_id: str = Field(foreign_key="pharmacy.id")
@@ -47,7 +54,11 @@ class Pharmacy(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(max_length=100, index=True)
-    phone: Optional[str] = Field(max_length=20, default=None)
+    phone: Optional[str] = Field(
+        max_length=20,
+        default=None,
+        regex=r"^\+?\d{1,4}?[-.\s]?(\(?\d{1,4}\)?[-.\s]?)?\d{3,5}[-.\s]?\d{4,9}$",
+    )
     opened: bool = Field(default=False)
     opening_hours: Optional[str] = Field(default=None)
 

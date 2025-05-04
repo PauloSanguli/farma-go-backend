@@ -7,7 +7,11 @@ from datetime import datetime
 class User(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
-    name: str = Field(max_length=100, index=True)
+    name: str = Field(
+        max_length=100,
+        index=True,
+        regex=r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$",
+    )
     password: str = Field(max_length=500)
     email: str = Field(unique=True, max_length=120)
 
