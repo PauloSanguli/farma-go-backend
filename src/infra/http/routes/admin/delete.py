@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from src.infra.http.repositorys import AdminRepository
 from src.infra.models import AddressPharmacy, Pharmacist, Pharmacy
 
-app = APIRouter(prefix="/admin")
+app = APIRouter(prefix="/admin", tags=["Admin"])
 
 
 @app.delete("/pharmacy")

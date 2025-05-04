@@ -8,20 +8,21 @@ from src.infra.http.routes.admin import (
     admin_routes_get,
     admin_routes_post,
 )
-from src.infra.http.routes.pharmacy import app as app_pharmacy
+from src.infra.http.routes.pharmacy import pharmacy_routes_post
 from src.infra.models import (
     AddressPharmacy,
     Medicine,
     Pharmacist,
     Pharmacy,
     PharmacyImage,
-    User,
+    User
 )
 
 api.include_router(admin_routes_get)
 api.include_router(admin_routes_post)
 api.include_router(admin_routes_delete)
-api.include_router(app_pharmacy)
+
+api.include_router(pharmacy_routes_post)
 
 
 if __name__ == "__main__":

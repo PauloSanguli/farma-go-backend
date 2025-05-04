@@ -5,6 +5,8 @@ from sqlmodel import UUID, Field, Relationship, SQLModel
 
 from src.infra.models.pharmacy_models import Pharmacy
 
+from src.domain.security import hash_password
+
 
 class Admin(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
@@ -18,3 +20,11 @@ class Admin(SQLModel, table=True):
             "primaryjoin": "Admin.id==Pharmacy.updated_by_admin_id"
         },
     )
+
+    @property
+    def password(self):
+        raise AttributeError("The password cannot be accessed directly.")
+
+    @password.setter
+    def password(self, raw_password: str):
+        self._password = hash_password(raw_password)

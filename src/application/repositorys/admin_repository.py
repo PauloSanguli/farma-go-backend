@@ -23,5 +23,9 @@ class IAdminRepository(ABC):
         NotImplementedError("Method 'list_pharmacys' should be implemented!")
 
     @abstractmethod
-    def regist_pharmacist_in_pharmacy(pharmacy_id: str, pharmacist: Pharmacist) -> dict[str, str]:
-        NotImplementedError("Method 'regist_pharmacist_in_pharmacy' should be implemented!")
+    def regist_pharmacist_in_pharmacy(
+        pharmacy_id: str, pharmacist: Pharmacist
+    ) -> dict[str, str]:
+        NotImplementedError(
+            "Method 'regist_pharmacist_in_pharmacy' should be implemented!"
+        )

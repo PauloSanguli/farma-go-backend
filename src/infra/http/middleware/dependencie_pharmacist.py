@@ -5,17 +5,17 @@ import jwt
 from fastapi import Header, HTTPException
 
 
-class JWTTokenExceptionHandler:
+class JWTTokenExceptionHandlerPharmacist:
 
     @classmethod
     def get_user_logged(cls, x_acess_token: Annotated[str, Header()]):
-        """metod for get user logged form token"""
+        """metod for get pharmacist logged form token"""
         if not "bearer" in x_acess_token:
             cls.set_exception_http("invalid token bearer", 401)
         token_true = x_acess_token.replace("bearer ", "")
         try:
             FIELDS_ACCOUNT_LOGGED = jwt.decode(
-                token_true, os.getenv("SECRET-KEY"), ["HS256"]
+                token_true, os.getenv("SECRET-sKEY"), ["HS256"]
             )
         except:
             cls.set_exception_http("your signature was expired", 401)

@@ -6,6 +6,8 @@ from sqlmodel import Field, Relationship, SQLModel
 
 from src.domain.enums import MedicineCategory
 
+from src.domain.security import hash_password
+
 
 class AddressPharmacy(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
@@ -49,6 +51,15 @@ class Pharmacist(SQLModel, table=True):
 
     pharmacy_id: str = Field(foreign_key="pharmacy.id")
     pharmacy: Optional["Pharmacy"] = Relationship(back_populates="pharmacists")
+
+    @property
+    def password(self):
+        raise AttributeError("The password cannot be accessed directly.")
+
+    @password.setter
+    def password(self, raw_password: str):
+        self._password = hash_password(raw_password)
+
 
 
 class Pharmacy(SQLModel, table=True):

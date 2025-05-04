@@ -4,13 +4,13 @@ from fastapi.responses import JSONResponse
 from src.infra.http.repositorys import PharmacyRepository
 from src.infra.models import Medicine
 
-app = APIRouter(prefix="/pharmacy")
+app = APIRouter(prefix="/pharmacy", tags=["Pharmacy"])
 
 
 @app.post("/medicine")
 def regist_medicine(medicine: Medicine):
-    PharmacyRepository.regist_medicine(medicine)
+    response: dict[str, str] = PharmacyRepository.regist_medicine(medicine)
     return JSONResponse(
-        content={"detail": "The medicine was already added to stock"},
+        content=response,
         status_code=status.HTTP_201_CREATED,
     )

@@ -7,12 +7,13 @@ from fastapi import HTTPException
 
 class TokenHandler:
     """"""
-    def create_token(reference_account: int):
+
+    def create_token(pharmacist_id: int):
         """create token"""
         try:
             key_app = os.getenv("SECRET-KEY")
             payload = {
-                "ref": reference_account,
+                "pharmacist_id": pharmacist_id,
                 "exp": datetime.utcnow() + timedelta(days=1),
             }
             token = jwt.encode(payload, key_app)

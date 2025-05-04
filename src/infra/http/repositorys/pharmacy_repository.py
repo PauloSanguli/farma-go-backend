@@ -9,6 +9,9 @@ from src.infra.models import Medicine
 class PharmacyRepository:
     @staticmethod
     def regist_medicine(medicine: Type[Medicine]):
-        session: Type[Session] = get_session()
+        # add that medicine on the real stock
+
+        session: Session = get_session()
         session.add(medicine)
         session.commit()
+        return {"detail": "The medicine was already added to stock"}
