@@ -20,4 +20,8 @@ class IAdminRepository(ABC):
 
     @abstractmethod
     def list_pharmacys() -> list[Pharmacy]:
-        NotImplementedError("Method 'list_pharmacys' should be implemented@")
+        NotImplementedError("Method 'list_pharmacys' should be implemented!")
+
+    @abstractmethod
+    def regist_pharmacist_in_pharmacy(pharmacy_id: str, pharmacist: Pharmacist) -> dict[str, str]:
+        NotImplementedError("Method 'regist_pharmacist_in_pharmacy' should be implemented!")

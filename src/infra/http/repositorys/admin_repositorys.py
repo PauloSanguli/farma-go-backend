@@ -37,14 +37,14 @@ class AdminRepository(IAdminRepository):
         return {"detail": "Pharmacy created with successfuly"}
 
     @staticmethod
-    def list_pharmacys():
+    def list_pharmacys() -> list[Pharmacy]:
         session: Session = get_session()
         statement = select(Pharmacy).options(selectinload(Pharmacy.address))
         pharmacys = session.exec(statement).all()
         return pharmacys
 
     @staticmethod
-    def delete_pharmacy(pharmacy_id: str):
+    def delete_pharmacy(pharmacy_id: str) -> dict[str, str]:
         session: Session = get_session()
         pharmacy = session.exec(select(Pharmacy).where(Pharmacy.id == pharmacy_id)).first()
         if not pharmacy:
@@ -54,3 +54,17 @@ class AdminRepository(IAdminRepository):
             )
         session.delete(pharmacy)
         return {"detail": "Pharmacy was sucessfuly deleted!"}
+    
+    @staticmethod
+    def regist_pharmacist_in_pharmacy(pharmacist: Pharmacist) -> dict[str, str]:
+        session: Session = get_session()
+        pharmacy = session.exec(
+            select(Pharmacy).where(Pharmacy.id==pharmacist.pharmacy_id)
+        ).first()
+        if not pharmacy:
+            raise HTTPException(
+                detail=f"Pharmacy '{pharmacist.pharmacy_id}' don't finded!",
+                status_code=status.HTTP_404_NOT_FOUND
+            )
+        session.add(pharmacist)
+        return {"detail": "Pharmacist was sucessufuly created!"}

@@ -11,5 +11,13 @@ app = APIRouter(prefix="/admin")
 async def regist_pharmacy(
     pharmacy: Pharmacy, address: AddressPharmacy, pharmacist: Pharmacist
 ):
-    response = AdminRepository.regist_pharmacy(pharmacy, address, pharmacist)
+    response: dict[str, str] = AdminRepository.regist_pharmacy(pharmacy, address, pharmacist)
     return JSONResponse(content=response, status_code=status.HTTP_201_CREATED)
+
+@app.post("/pharmacy/pharmacist")
+async def regist_pharmacist_in_pharmacy(pharmacist: Pharmacist):
+    response: dict[str, str] = AdminRepository.regist_pharmacist_in_pharmacy(pharmacist)
+    return JSONResponse(
+        content=response,
+        status_code=status.HTTP_201_CREATED
+    )

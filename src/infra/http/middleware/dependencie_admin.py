@@ -15,7 +15,7 @@ class JWTTokenExceptionHandler:
         token_true = x_acess_token.replace("bearer ", "")
         try:
             FIELDS_ACCOUNT_LOGGED = jwt.decode(
-                token_true, os.getenv("SECRET_KEY"), ["HS256"]
+                token_true, os.getenv("SECRET-KEY"), ["HS256"]
             )
         except:
             cls.set_exception_http("your signature was expired", 401)

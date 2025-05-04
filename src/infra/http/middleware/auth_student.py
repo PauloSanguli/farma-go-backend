@@ -7,11 +7,10 @@ from fastapi import HTTPException
 
 class TokenHandler:
     """"""
-
     def create_token(reference_account: int):
         """create token"""
         try:
-            key_app = os.getenv("SECRET_KEY")
+            key_app = os.getenv("SECRET-KEY")
             payload = {
                 "ref": reference_account,
                 "exp": datetime.utcnow() + timedelta(days=1),
