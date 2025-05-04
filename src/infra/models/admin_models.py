@@ -21,10 +21,7 @@ class Admin(SQLModel, table=True):
         },
     )
 
-    @property
-    def password(self):
-        raise AttributeError("The password cannot be accessed directly.")
-
-    @password.setter
-    def password(self, raw_password: str):
-        self._password = hash_password(raw_password)
+    def _encrypt_password(self, password: str | None = None) -> None:
+        self.password = hash_password(
+            password or self.password
+        )

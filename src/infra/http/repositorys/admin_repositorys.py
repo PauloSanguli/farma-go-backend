@@ -28,9 +28,9 @@ class AdminRepository(IAdminRepository):
             pharmacy.stock_id = stock.id
 
             session.add_all([pharmacy, address, pharmacist, stock])
-        except IntegrityError:
+        except IntegrityError as e:
             raise HTTPException(
-                detail="Error during creation of pharmacy",
+                detail=f"Error during creation of pharmacy: {e._message()}",
                 status_code=status.HTTP_400_BAD_REQUEST,
             )
         session.commit()
@@ -60,13 +60,21 @@ class AdminRepository(IAdminRepository):
     @staticmethod
     def regist_pharmacist_in_pharmacy(pharmacist: Pharmacist) -> dict[str, str]:
         session: Session = get_session()
-        pharmacy = session.exec(
-            select(Pharmacy).where(Pharmacy.id == pharmacist.pharmacy_id)
-        ).first()
-        if not pharmacy:
+        try:
+            pharmacy = session.exec(
+                select(Pharmacy).where(Pharmacy.id == pharmacist.pharmacy_id)
+            ).first()
+            if not pharmacy:
+                raise HTTPException(
+                    detail=f"Pharmacy '{pharmacist.pharmacy_id}' don't finded!",
+                    status_code=status.HTTP_404_NOT_FOUND,
+                )
+            pharmacist._encrypt_password()
+            session.add(pharmacist)
+            session.commit()
+        except IntegrityError as e:
             raise HTTPException(
-                detail=f"Pharmacy '{pharmacist.pharmacy_id}' don't finded!",
-                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"An error occured: {e._message()}",
+                status_code=status.HTTP_400_BAD_REQUEST
             )
-        session.add(pharmacist)
         return {"detail": "Pharmacist was sucessufuly created!"}

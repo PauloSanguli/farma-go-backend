@@ -52,14 +52,10 @@ class Pharmacist(SQLModel, table=True):
     pharmacy_id: str = Field(foreign_key="pharmacy.id")
     pharmacy: Optional["Pharmacy"] = Relationship(back_populates="pharmacists")
 
-    @property
-    def password(self):
-        raise AttributeError("The password cannot be accessed directly.")
-
-    @password.setter
-    def password(self, raw_password: str):
-        self._password = hash_password(raw_password)
-
+    def _encrypt_password(self, password: str | None = None) -> None:
+        self.password = hash_password(
+            password or self.password
+        )
 
 
 class Pharmacy(SQLModel, table=True):
