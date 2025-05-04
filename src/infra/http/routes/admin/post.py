@@ -14,9 +14,7 @@ app = APIRouter(prefix="/admin")
 async def regist_pharmacy(
     pharmacy: Pharmacy, address: AddressPharmacy, pharmacist: Pharmacist
 ):
+    print("#"*50)
     response = AdminRepository.regist_pharmacy(pharmacy, address, pharmacist)
     return JSONResponse(content=response, status_code=status.HTTP_201_CREATED)
 
-
-# @app.post("/pharmacist")
-# async def regist_pharmacist(pharmacist)

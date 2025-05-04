@@ -22,4 +22,4 @@ api.include_router(app_pharmacy)
 
 
 if __name__ == "__main__":
-    uvicorn.run(api, port=3435)
+    uvicorn.run(api, port=3435, reload=True)

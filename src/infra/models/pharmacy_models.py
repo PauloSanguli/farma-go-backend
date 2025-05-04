@@ -39,9 +39,10 @@ class Pharmacist(SQLModel, table=True):
     email: str = Field(unique=True, max_length=120)
     phone: Optional[str] = Field(max_length=20)
     license_number: str = Field(max_length=50, unique=True)
-    pharmacy_id: str = Field(foreign_key="pharmacy.id")
 
+    pharmacy_id: str = Field(foreign_key="pharmacy.id")
     pharmacy: Optional["Pharmacy"] = Relationship(back_populates="pharmacists")
+
 
 class Pharmacy(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
@@ -51,13 +52,15 @@ class Pharmacy(SQLModel, table=True):
     opened: bool = Field(default=False)
     opening_hours: Optional[str] = Field(default=None)
     address_id: str = Field(foreign_key="addresspharmacy.id")
-    image_url: Optional[str] = Field(default=None)
+
+    pharmacy_images: List["PharmacyImage"] = Relationship(back_populates="pharmacy")
+
+    address: "AddressPharmacy" = Relationship(back_populates="pharmacies")
 
     stock_id: Optional[str] = Field(foreign_key="stock.id")
     stock: Optional["Stock"] = Relationship(back_populates="pharmacy")
 
     pharmacists: List["Pharmacist"] = Relationship(back_populates="pharmacy")
-
 
 class Stock(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
