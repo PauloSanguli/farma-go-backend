@@ -6,7 +6,6 @@ from sqlmodel import Field, Relationship, SQLModel
 from src.domain.enums import MedicineCategory
 
 
-
 class AddressPharmacy(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -28,7 +27,7 @@ class PharmacyImage(SQLModel, table=True):
     image_url: str = Field(max_length=500)
     uploaded_at: datetime = Field(default_factory=datetime.utcnow)
 
-    pharmacy: Optional["Pharmacy"] = Relationship(back_populates="images")
+    pharmacy: Optional["Pharmacy"] = Relationship(back_populates="pharmacy_images")
 
 
 class Pharmacist(SQLModel, table=True):
@@ -51,21 +50,22 @@ class Pharmacy(SQLModel, table=True):
     phone: Optional[str] = Field(max_length=20, default=None)
     opened: bool = Field(default=False)
     opening_hours: Optional[str] = Field(default=None)
-    address_id: str = Field(foreign_key="addresspharmacy.id")
 
     pharmacy_images: List["PharmacyImage"] = Relationship(back_populates="pharmacy")
 
-    address: "AddressPharmacy" = Relationship(back_populates="pharmacies")
+    address_id: str = Field(foreign_key="addresspharmacy.id")
+    address: "AddressPharmacy" = Relationship(back_populates="pharmacy")
 
     stock_id: Optional[str] = Field(foreign_key="stock.id")
     stock: Optional["Stock"] = Relationship(back_populates="pharmacy")
 
     pharmacists: List["Pharmacist"] = Relationship(back_populates="pharmacy")
 
+
 class Stock(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
-    pharmacy_id: str = Field(foreign_key="pharmacy.id")
+
     pharmacy: Pharmacy = Relationship(back_populates="stock")
 
     medicines: List["Medicine"] = Relationship(back_populates="stock")

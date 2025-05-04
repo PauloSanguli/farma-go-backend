@@ -5,7 +5,6 @@ from uuid import uuid4
 from src.infra.models.pharmacy_models import Pharmacy
 
 
-
 class Admin(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     email: str = Field(unique=True, max_length=120)
@@ -14,5 +13,7 @@ class Admin(SQLModel, table=True):
 
     updated_pharmacies: list["Pharmacy"] = Relationship(
         back_populates="updated_by_admin",
-        sa_relationship_kwargs={"primaryjoin": "Admin.id==Pharmacy.updated_by_admin_id"}
+        sa_relationship_kwargs={
+            "primaryjoin": "Admin.id==Pharmacy.updated_by_admin_id"
+        },
     )

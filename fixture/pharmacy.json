@@ -1,0 +1,243 @@
+[
+    {
+      "pharmacy": {
+        "name": "Farmácia São João",
+        "phone": "(11) 98765-4321",
+        "opened": false,
+        "opening_hours": "Seg-Sex: 08:00-18:00, Sáb: 08:00-12:00"
+      },
+      "address": {
+        "street": "Rua das Flores",
+        "neighborhood": "Centro",
+        "city": "São Paulo",
+        "state": "SP",
+        "zip_code": "01000-000",
+        "latitude": -23.5505,
+        "longitude": -46.6333
+      },
+      "pharmacist": {
+        "name": "João da Silva",
+        "password": "senha123",
+        "email": "joao.silva2@email.com",
+        "phone": "(11) 91234-5678",
+        "license_number": "123456780"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Drogaria Central",
+        "phone": "(21) 99876-5432",
+        "opened": true,
+        "opening_hours": "Seg-Sab: 08:00-20:00"
+      },
+      "address": {
+        "street": "Av. Brasil",
+        "neighborhood": "Centro",
+        "city": "Rio de Janeiro",
+        "state": "RJ",
+        "zip_code": "20000-000",
+        "latitude": -22.9068,
+        "longitude": -43.1729
+      },
+      "pharmacist": {
+        "name": "Maria Oliveira",
+        "password": "senha456",
+        "email": "maria.oliveira@email.com",
+        "phone": "(21) 93456-7890",
+        "license_number": "876543210"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Farmácia Vida",
+        "phone": "(31) 92345-6789",
+        "opened": true,
+        "opening_hours": "Seg-Sex: 07:00-19:00, Sáb: 07:00-13:00"
+      },
+      "address": {
+        "street": "Rua da Paz",
+        "neighborhood": "Savassi",
+        "city": "Belo Horizonte",
+        "state": "MG",
+        "zip_code": "30130-000",
+        "latitude": -19.9208,
+        "longitude": -43.9378
+      },
+      "pharmacist": {
+        "name": "Carlos Mendes",
+        "password": "minhasenha",
+        "email": "carlos.mendes@email.com",
+        "phone": "(31) 99876-1234",
+        "license_number": "234567891"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Drogaria Mais Saúde",
+        "phone": "(41) 95432-1987",
+        "opened": false,
+        "opening_hours": "Seg-Sex: 09:00-18:00"
+      },
+      "address": {
+        "street": "Rua Curitiba",
+        "neighborhood": "Água Verde",
+        "city": "Curitiba",
+        "state": "PR",
+        "zip_code": "80010-000",
+        "latitude": -25.4284,
+        "longitude": -49.2733
+      },
+      "pharmacist": {
+        "name": "Ana Paula Costa",
+        "password": "1234senha",
+        "email": "ana.costa@email.com",
+        "phone": "(41) 99877-6655",
+        "license_number": "345678902"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Farmácia Bem Estar",
+        "phone": "(51) 98765-1122",
+        "opened": true,
+        "opening_hours": "Seg-Sab: 08:00-22:00"
+      },
+      "address": {
+        "street": "Av. Ipiranga",
+        "neighborhood": "Centro Histórico",
+        "city": "Porto Alegre",
+        "state": "RS",
+        "zip_code": "90010-000",
+        "latitude": -30.0277,
+        "longitude": -51.2287
+      },
+      "pharmacist": {
+        "name": "Fernanda Lima",
+        "password": "senha789",
+        "email": "fernanda.lima@email.com",
+        "phone": "(51) 98765-3344",
+        "license_number": "456789013"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Drogaria Pague Menos",
+        "phone": "(85) 98888-7766",
+        "opened": true,
+        "opening_hours": "Todos os dias: 08:00-21:00"
+      },
+      "address": {
+        "street": "Rua do Sol",
+        "neighborhood": "Aldeota",
+        "city": "Fortaleza",
+        "state": "CE",
+        "zip_code": "60110-000",
+        "latitude": -3.7172,
+        "longitude": -38.5433
+      },
+      "pharmacist": {
+        "name": "Lucas Souza",
+        "password": "lucas321",
+        "email": "lucas.souza@email.com",
+        "phone": "(85) 93322-1100",
+        "license_number": "567890124"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Farmácia Popular",
+        "phone": "(62) 95555-4455",
+        "opened": false,
+        "opening_hours": "Seg-Sex: 08:00-17:00"
+      },
+      "address": {
+        "street": "Rua Goiás",
+        "neighborhood": "Setor Central",
+        "city": "Goiânia",
+        "state": "GO",
+        "zip_code": "74000-000",
+        "latitude": -16.6869,
+        "longitude": -49.2648
+      },
+      "pharmacist": {
+        "name": "Renata Dias",
+        "password": "renata456",
+        "email": "renata.dias@email.com",
+        "phone": "(62) 97766-5544",
+        "license_number": "678901235"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Drogaria Econômica",
+        "phone": "(71) 91111-2233",
+        "opened": true,
+        "opening_hours": "Seg-Sab: 09:00-20:00"
+      },
+      "address": {
+        "street": "Av. Sete de Setembro",
+        "neighborhood": "Centro",
+        "city": "Salvador",
+        "state": "BA",
+        "zip_code": "40060-001",
+        "latitude": -12.9714,
+        "longitude": -38.5014
+      },
+      "pharmacist": {
+        "name": "Tatiane Rocha",
+        "password": "tatiane321",
+        "email": "tatiane.rocha@email.com",
+        "phone": "(71) 98888-9988",
+        "license_number": "789012346"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Farmácia do Trabalhador",
+        "phone": "(95) 93456-7890",
+        "opened": true,
+        "opening_hours": "Seg-Dom: 07:00-21:00"
+      },
+      "address": {
+        "street": "Rua das Palmeiras",
+        "neighborhood": "Centro",
+        "city": "Boa Vista",
+        "state": "RR",
+        "zip_code": "69300-000",
+        "latitude": 2.8195,
+        "longitude": -60.6733
+      },
+      "pharmacist": {
+        "name": "Jorge Matos",
+        "password": "senha000",
+        "email": "jorge.matos@email.com",
+        "phone": "(95) 94444-1234",
+        "license_number": "890123457"
+      }
+    },
+    {
+      "pharmacy": {
+        "name": "Drogaria União",
+        "phone": "(98) 91122-3344",
+        "opened": false,
+        "opening_hours": "Seg-Sex: 08:00-18:00"
+      },
+      "address": {
+        "street": "Rua Maranhão",
+        "neighborhood": "Renascença",
+        "city": "São Luís",
+        "state": "MA",
+        "zip_code": "65075-000",
+        "latitude": -2.5307,
+        "longitude": -44.3068
+      },
+      "pharmacist": {
+        "name": "Bruna Teixeira",
+        "password": "bruna789",
+        "email": "bruna.teixeira@email.com",
+        "phone": "(98) 91234-5678",
+        "license_number": "901234568"
+      }
+    }
+  ]
+  
