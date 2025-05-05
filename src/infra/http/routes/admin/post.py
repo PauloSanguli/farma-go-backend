@@ -4,6 +4,11 @@ from fastapi.responses import JSONResponse
 from src.infra.http.repositorys import AdminRepository
 from src.infra.models import AddressPharmacy, Pharmacist, Pharmacy
 
+from src.domain.schemas import AdminSchema
+
+from src.infra.http.middleware.authenticators import JwtHandler
+
+
 app = APIRouter(prefix="/admin", tags=["Admin"])
 
 
@@ -21,3 +26,14 @@ async def regist_pharmacy(
 async def regist_pharmacist_in_pharmacy(pharmacist: Pharmacist):
     response: dict[str, str] = AdminRepository.regist_pharmacist_in_pharmacy(pharmacist)
     return JSONResponse(content=response, status_code=status.HTTP_201_CREATED)
+
+@app.post("/login")
+def admin_login(admin: AdminSchema):
+    jwt_handler = JwtHandler()
+    token: str = 
+    return JSONResponse(
+        content={
+            "token": token
+        },
+        status_code=status.HTTP_201_CREATED
+    )

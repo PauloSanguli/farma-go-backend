@@ -22,3 +22,7 @@ class PharmacySchema(BaseModel):
     image_url: Optional[str]
     address: AddressPharmacySchema
     pharmacist_id: str
+
+class PharmacistSchema(BaseModel):
+    # email
+    pass
