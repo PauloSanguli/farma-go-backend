@@ -23,6 +23,7 @@ class PharmacySchema(BaseModel):
     address: AddressPharmacySchema
     pharmacist_id: str
 
+
 class PharmacistSchema(BaseModel):
     # email
     pass

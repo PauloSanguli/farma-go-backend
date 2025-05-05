@@ -7,6 +7,8 @@ from sqlmodel import Field, Relationship, SQLModel
 from src.domain.enums import MedicineCategory
 from src.domain.security import hash_password
 
+from src.shared.mixins import PasswordMixin
+
 
 class AddressPharmacy(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
@@ -32,7 +34,7 @@ class PharmacyImage(SQLModel, table=True):
     pharmacy: Optional["Pharmacy"] = Relationship(back_populates="pharmacy_images")
 
 
-class Pharmacist(SQLModel, table=True):
+class Pharmacist(SQLModel, PasswordMixin,table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(max_length=100, index=True)
@@ -50,9 +52,6 @@ class Pharmacist(SQLModel, table=True):
 
     pharmacy_id: str = Field(foreign_key="pharmacy.id")
     pharmacy: Optional["Pharmacy"] = Relationship(back_populates="pharmacists")
-
-    def _encrypt_password(self, password: str | None = None) -> None:
-        self.password = hash_password(password or self.password)
 
 
 class Pharmacy(SQLModel, table=True):

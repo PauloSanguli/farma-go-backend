@@ -8,7 +8,7 @@ from sqlmodel import Session, delete, select
 from src.application.repositorys import IAdminRepository
 from src.domain.schemas import PharmacySchema
 from src.infra.configs import get_session
-from src.infra.models import AddressPharmacy, Pharmacist, Pharmacy, PharmacyImage, Stock
+from src.infra.models import AddressPharmacy, Pharmacist, Pharmacy, PharmacyImage, Stock, Admin
 
 
 class AdminRepository(IAdminRepository):
@@ -78,3 +78,13 @@ class AdminRepository(IAdminRepository):
                 status_code=status.HTTP_400_BAD_REQUEST,
             )
         return {"detail": "Pharmacist was sucessufuly created!"}
+
+    @staticmethod
+    def create_admin(admin: Admin) -> dict[str, str]:
+        session: Session = get_session()
+        admin._encrypt_password()
+        session.add(admin)
+        session.commit()
+        return {
+            "detail": "admin was created with successfuly!"
+        }

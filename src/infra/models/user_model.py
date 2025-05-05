@@ -6,8 +6,10 @@ from sqlmodel import Field, Relationship, SQLModel
 
 from src.domain.security import hash_password
 
+from src.shared.mixins import PasswordMixin
 
-class User(SQLModel, table=True):
+
+class User(SQLModel, PasswordMixin,table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(
@@ -19,9 +21,6 @@ class User(SQLModel, table=True):
     email: str = Field(unique=True, max_length=120)
 
     search_history: List["UserSearchHistory"] = Relationship(back_populates="user")
-
-    def _encrypt_password(self, password: str | None = None) -> None:
-        self.password = hash_password(password or self.password)
 
 
 class UserSearchHistory(SQLModel, table=True):
