@@ -93,5 +93,7 @@ class Medicine(SQLModel, table=True):
     category: MedicineCategory = Field(sa_column_kwargs={"nullable": False})
     image_url: Optional[str] = Field(default=None, max_length=255)
 
+    quantity: int = Field(default=1)
+
     stock_id: str = Field(foreign_key="stock.id")
     stock: Optional["Stock"] = Relationship(back_populates="medicines")

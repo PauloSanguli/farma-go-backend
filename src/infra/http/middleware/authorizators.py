@@ -4,6 +4,7 @@ from typing import Annotated
 import jwt
 from fastapi import Header, HTTPException
 
+from src.infra.http.exceptions import PermissionDeniedError, InvalidTokenProvidedError
 
 class JWTTokenExceptionHandler:
     @classmethod
@@ -13,12 +14,14 @@ class JWTTokenExceptionHandler:
             cls.set_exception_http("invalid token bearer", 401)
         token_true = x_acess_token.replace("bearer ", "")
         try:
-            FIELDS_ACCOUNT_LOGGED = jwt.decode(
-                token_true, os.getenv("SECRET-sKEY"), ["HS256"]
+            admin_data = jwt.decode(
+                token_true, os.getenv("SECRET-KEY", ""), ["HS256"]
             )
-        except:
-            cls.set_exception_http("your signature was expired", 401)
-        return FIELDS_ACCOUNT_LOGGED
+            if not "admin" == admin_data.get("role"):
+                raise PermissionDeniedError()
+        except (jwt.DecodeError, jwt.ExpiredSignatureError):
+            cls.set_exception_http("your signature was expired or invalid", 401)
+        return admin_data
 
     # @classmethod
     # def get_user_logged(cls, x_acess_token: Annotated[str, Header()]):
