@@ -9,7 +9,7 @@ class MedicineCategory(str, Enum):
     OTHER = "other"
 
 
-class UserRole(str, Enum):
+class EntityRole(str, Enum):
     ADMIN = "admin"
     PHARMACIST = "pharmacist"
     USER = "user"

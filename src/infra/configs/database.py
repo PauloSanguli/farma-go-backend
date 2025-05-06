@@ -2,8 +2,6 @@ from os import getenv
 
 from sqlmodel import Session, SQLModel, create_engine
 
-from sqlmodel import Session
-
 
 def create_tables():
     engine = get_engine_connection()

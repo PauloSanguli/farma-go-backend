@@ -1,14 +1,12 @@
+from uuid import uuid4
+
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
-from src.infra.http.repositorys import PharmacyRepository
-from src.infra.http.controllers import PharmacyController
-from src.infra.models import Medicine
-
 from src.domain.schemas import AuthSchema, PharmacistSchema
-
-from uuid import uuid4
-
+from src.infra.http.controllers import PharmacyController
+from src.infra.http.repositorys import PharmacyRepository
+from src.infra.models import Medicine
 
 app = APIRouter(prefix="/pharmacy", tags=["Pharmacy"])
 
@@ -21,10 +19,8 @@ def regist_medicine(medicine: Medicine):
         status_code=status.HTTP_201_CREATED,
     )
 
+
 @app.post("/pharmacist/login")
 def pharmacist_login(pharmacist: AuthSchema):
-    response: dict[str,str] = PharmacyController.authenticate_pharmacist(pharmacist)
-    return JSONResponse(
-        content=response,
-        status_code=status.HTTP_201_CREATED
-    )
+    response: dict[str, str] = PharmacyController.authenticate_pharmacist(pharmacist)
+    return JSONResponse(content=response, status_code=status.HTTP_201_CREATED)
