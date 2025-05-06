@@ -17,8 +17,8 @@ class AdminController:
         admin = session.exec(query).first()
         if not admin:
             raise HTTPException(
-                detail="Invalid email provided",
-                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Admin not found",
+                status_code=status.HTTP_404_NOT_FOUND,
             )
         admin._check_password(admin_data.password)
         return jwt_handler.create_token_admin(admin.id)

@@ -7,6 +7,9 @@ from src.infra.models import Medicine
 
 from src.domain.schemas import AuthSchema, PharmacistSchema
 
+from uuid import uuid4
+
+
 app = APIRouter(prefix="/pharmacy", tags=["Pharmacy"])
 
 
@@ -18,7 +21,10 @@ def regist_medicine(medicine: Medicine):
         status_code=status.HTTP_201_CREATED,
     )
 
-@app.post("/pharmacist/login", response_model=PharmacistSchema)
+@app.post("/pharmacist/login")
 def pharmacist_login(pharmacist: AuthSchema):
-    p = PharmacyController.authenticate_pharmacist(pharmacist)
-    return p
+    response: dict[str,str] = PharmacyController.authenticate_pharmacist(pharmacist)
+    return JSONResponse(
+        content=response,
+        status_code=status.HTTP_201_CREATED
+    )
