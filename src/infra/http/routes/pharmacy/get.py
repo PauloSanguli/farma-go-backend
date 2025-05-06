@@ -43,3 +43,11 @@ async def retrieve_pharmacy_stock(
 ):
     stock: Stock = PharmacyRepository.retrieve_stock_pharmacy(pharmacist_logged.get("tennant"))
     return stock.medicines
+
+@app.get("/search-medicine/")
+async def search_medicine_in_pharmacy(
+    pharmacist_logged: Annotated[dict[str, str], Depends(JWTPermissionsHandler.get_pharmacist_logged)],
+    medicine: str
+):
+    results: list[Pharmacy] = PharmacyController.search_medicine_in_pharmacy_stock(pharmacist_logged.get("tennant"), medicine)
+    return results

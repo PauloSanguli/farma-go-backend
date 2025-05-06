@@ -57,3 +57,21 @@ class PharmacyController:
         session.refresh(medicine)
 
         return {"message": "Medicine stock updated successfully", "medicine_id": medicine.id}
+
+    def search_medicine_in_pharmacy_stock(pharmacy_id: str, medicine_name: str) -> dict:
+        session: Session = get_session()
+        stock: Stock = PharmacyRepository.retrieve_stock_pharmacy(pharmacy_id)
+
+        query = select(Medicine).where(
+            Medicine.name.ilike(f"%{medicine_name}%"), 
+            Medicine.stock_id == stock.id
+        )
+        result = session.exec(query).all()
+
+        if not result:
+            raise HTTPException(
+                status_code=404,
+                detail="Medicine not found"
+            )
+
+        return result
