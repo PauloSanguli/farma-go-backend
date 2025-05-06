@@ -2,7 +2,7 @@ from fastapi import status
 from fastapi.exceptions import HTTPException
 from sqlmodel import Session, select
 
-from src.domain.schemas import AdminSchema
+from src.domain.schemas import AuthSchema
 from src.infra.configs import get_session
 from src.infra.http.middleware.authenticators import JwtHandler
 from src.infra.models import Admin
@@ -10,7 +10,7 @@ from src.infra.models import Admin
 
 class AdminController:
     @staticmethod
-    def authenticate_admin(admin_data: AdminSchema) -> str:
+    def authenticate_admin(admin_data: AuthSchema) -> str:
         session: Session = get_session()
         jwt_handler = JwtHandler()
         query = select(Admin).where(Admin.email == admin_data.email)

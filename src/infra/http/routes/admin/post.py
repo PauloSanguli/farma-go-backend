@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
-from src.domain.schemas import AdminSchema
+from src.domain.schemas import AuthSchema
 from src.infra.http.controllers import AdminController
 from src.infra.http.repositorys import AdminRepository
 from src.infra.models import AddressPharmacy, Admin, Pharmacist, Pharmacy
@@ -26,7 +26,7 @@ async def regist_pharmacist_in_pharmacy(pharmacist: Pharmacist):
 
 
 @app.post("/login")
-def admin_login(admin: AdminSchema):
+def admin_login(admin: AuthSchema):
     token: str = AdminController.authenticate_admin(admin)
     return JSONResponse(content={"token": token}, status_code=status.HTTP_201_CREATED)
 

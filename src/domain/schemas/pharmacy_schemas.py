@@ -25,5 +25,9 @@ class PharmacySchema(BaseModel):
 
 
 class PharmacistSchema(BaseModel):
-    # email
-    pass
+    created_at: datetime
+    name: str
+    email: str
+    phone: Optional[str]
+    license_number: str
+    pharmacy_id: str
