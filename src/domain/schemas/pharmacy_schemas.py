@@ -19,9 +19,7 @@ class PharmacySchema(BaseModel):
     phone: Optional[str]
     opened: bool
     opening_hours: Optional[str]
-    image_url: Optional[str]
     address: AddressPharmacySchema
-    pharmacist_id: str
 
 
 class PharmacistSchema(BaseModel):

@@ -33,6 +33,7 @@ class AdminRepository(IAdminRepository):
             pharmacy.address_id = address.id
             pharmacist.pharmacy_id = pharmacy.id
             pharmacy.stock_id = stock.id
+            pharmacist._encrypt_password()
 
             session.add_all([pharmacy, address, pharmacist, stock])
         except IntegrityError as e:
