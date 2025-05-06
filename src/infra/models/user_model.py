@@ -17,6 +17,7 @@ class User(SQLModel, PasswordMixin, table=True):
         regex=r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$",
     )
     password: str = Field(max_length=500)
+    image_url: Optional[str] = Field(max_length=500, default=None)
     email: str = Field(unique=True, max_length=120)
 
     search_history: List["UserSearchHistory"] = Relationship(back_populates="user")
