@@ -12,19 +12,22 @@ from src.domain.schemas import PharmacySchema
 class PharmacyRepository:
     @staticmethod
     def regist_medicine(medicine: Medicine, pharmacy_id: str) -> dict[str, str]:
-        # add that medicine on the real stock
         session: Session = get_session()
-        stock: Stock = PharmacyRepository.retrieve_stock_pharmacy(pharmacy_id)
+        result: dict = PharmacyRepository.retrieve_pharmacy_by_id(pharmacy_id)
+        stock: Stock = result.get("stock")
         medicine.stock_id = stock.id
+        query = select(Medicine).where(
+            Medicine.name.ilike(f"%{medicine.name}%"), 
+            Medicine.stock_id == stock.id
+        )
+        medicine_exists = session.exec(query).all()
+        if len(medicine_exists) > 0:
+            return {
+                'detail': "This medicine already stay on that stock"
+            }
         session.add(medicine)
         session.commit()
         return {"detail": "The medicine was already added to stock"}
-    
-    @staticmethod
-    def retrieve_stock_pharmacy(pharmacy_id: str) -> Stock:
-        session: Session = get_session()
-        result: dict = PharmacyRepository.retrieve_pharmacy_by_id(pharmacy_id)
-        return result.get("stock")
     
     @staticmethod
     def retrieve_pharmacy_by_id(pharmacy_id: str) -> dict:

@@ -23,3 +23,5 @@ class UserRepository:
         return {
             "detail": "User created with sucessfuly"
         }
+
+    

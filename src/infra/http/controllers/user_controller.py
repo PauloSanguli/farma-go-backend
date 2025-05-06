@@ -40,3 +40,22 @@ class UserController:
                 detail="Medicine not found"
             )
         return result
+
+    @staticmethod
+    def update_user_partial(user_id: str, data: dict) -> dict[str, str]:
+        session = get_session()
+        user = session.get(User, user_id)
+
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        for key, value in data.items():
+            if hasattr(user, key) and value is not None:
+                setattr(user, key, value)
+        session.add(user)
+        session.commit()
+        session.refresh(user)
+        return {
+            "detail": 'User data updated'
+        }
+    

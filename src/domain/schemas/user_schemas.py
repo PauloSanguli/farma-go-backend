@@ -9,3 +9,7 @@ class UserSchema(BaseModel):
     email: EmailStr
     password: str
     name: str
+
+class UserUpdateSchema(BaseModel):
+    email: EmailStr
+    name: str

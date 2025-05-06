@@ -17,3 +17,4 @@ async def search_medicine(
 ):
     results: list = UserController.search_medicine_in_pharmacy_stock(medicine)
     return results
+
