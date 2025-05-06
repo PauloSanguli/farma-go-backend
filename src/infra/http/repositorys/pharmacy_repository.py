@@ -41,5 +41,9 @@ class PharmacyRepository:
             "stock": result[1],
             "address": result[2]
         }
-
-
+    
+    @staticmethod
+    def retrieve_medicines_pharmacy(pharmacy_id: str) -> list[Medicine]:
+        stock: Stock = PharmacyRepository.retrieve_stock_pharmacy(pharmacy_id)
+        # medicines = sessions.exec(select(Medicine).where())
+        return stock.medicines

@@ -1,7 +1,5 @@
 from typing import Annotated
 
-from uuid import uuid4
-
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 from fastapi import Depends

@@ -29,3 +29,7 @@ class PharmacistSchema(BaseModel):
     phone: Optional[str]
     license_number: str
     pharmacy_id: str
+
+class MedicinestockSchema(BaseModel):
+    quantity: int
+    medicine_id: str

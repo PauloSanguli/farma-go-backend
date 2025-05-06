@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from fastapi import Depends
 
 from src.domain.schemas import AuthSchema, PharmacistSchema, PharmacySchema, AddressPharmacySchema
-from src.infra.models import Medicine, Pharmacy, AddressPharmacy
+from src.infra.models import Medicine, Pharmacy, AddressPharmacy, Stock
 from src.infra.http.controllers import PharmacyController
 from src.infra.http.repositorys import PharmacyRepository
 from src.infra.http.middleware.authorizators import JWTPermissionsHandler
@@ -37,3 +37,9 @@ async def retrieve_pharmacy(
         created_at=pharmacy.created_at
     )
 
+@app.get("/stock")
+async def retrieve_pharmacy_stock(
+    pharmacist_logged: Annotated[dict[str, str], Depends(JWTPermissionsHandler.get_pharmacist_logged)]
+):
+    stock: Stock = PharmacyRepository.retrieve_stock_pharmacy(pharmacist_logged.get("tennant"))
+    return stock.medicines
