@@ -36,7 +36,10 @@ class JWTPermissionsHandler:
     @classmethod
     def __decode_token(cls, acess_token: str) -> dict[str, str]:
         """Method for decode token"""
-        bearer, token = acess_token.split(" ")
+        token_splited = acess_token.split(" ")
+        if len(token_splited) != 2:
+            cls.__raise_exception_http("invalid token bearer", 401)
+        bearer, token = token_splited
         if "bearer" != bearer.lower():
             cls.__raise_exception_http("invalid token bearer", 401)
         try:

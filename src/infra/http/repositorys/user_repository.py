@@ -24,4 +24,7 @@ class UserRepository:
             "detail": "User created with sucessfuly"
         }
 
-    
+    def retrieve_profile_info(user_id: str) -> User:
+        session: Session = get_session()
+        user = session.get(User, user_id)
+        return user
