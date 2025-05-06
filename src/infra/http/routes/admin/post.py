@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from src.domain.schemas import AdminSchema
 from src.infra.http.controllers import AdminController
 from src.infra.http.repositorys import AdminRepository
-from src.infra.models import AddressPharmacy, Pharmacist, Pharmacy, Admin
+from src.infra.models import AddressPharmacy, Admin, Pharmacist, Pharmacy
 
 app = APIRouter(prefix="/admin", tags=["Admin"])
 
@@ -30,10 +30,8 @@ def admin_login(admin: AdminSchema):
     token: str = AdminController.authenticate_admin(admin)
     return JSONResponse(content={"token": token}, status_code=status.HTTP_201_CREATED)
 
+
 @app.post("/create")
 def create_admin(admin: Admin):
     response: dict[str, str] = AdminRepository.create_admin(admin)
-    return JSONResponse(
-        content=response,
-        status_code=status.HTTP_201_CREATED
-    )
+    return JSONResponse(content=response, status_code=status.HTTP_201_CREATED)

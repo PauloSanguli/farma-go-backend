@@ -1,12 +1,10 @@
 from datetime import datetime
-from typing import List, Optional, Type
+from typing import List, Optional
 from uuid import uuid4
 
 from sqlmodel import Field, Relationship, SQLModel
 
 from src.domain.enums import MedicineCategory
-from src.domain.security import hash_password
-
 from src.shared.mixins import PasswordMixin
 
 
@@ -34,7 +32,7 @@ class PharmacyImage(SQLModel, table=True):
     pharmacy: Optional["Pharmacy"] = Relationship(back_populates="pharmacy_images")
 
 
-class Pharmacist(SQLModel, PasswordMixin,table=True):
+class Pharmacist(SQLModel, PasswordMixin, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(max_length=100, index=True)

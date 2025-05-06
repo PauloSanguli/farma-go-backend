@@ -5,11 +5,10 @@ from uuid import uuid4
 from sqlmodel import Field, Relationship, SQLModel
 
 from src.domain.security import hash_password
-
 from src.shared.mixins import PasswordMixin
 
 
-class User(SQLModel, PasswordMixin,table=True):
+class User(SQLModel, PasswordMixin, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     name: str = Field(

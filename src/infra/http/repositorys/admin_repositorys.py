@@ -8,7 +8,14 @@ from sqlmodel import Session, delete, select
 from src.application.repositorys import IAdminRepository
 from src.domain.schemas import PharmacySchema
 from src.infra.configs import get_session
-from src.infra.models import AddressPharmacy, Pharmacist, Pharmacy, PharmacyImage, Stock, Admin
+from src.infra.models import (
+    AddressPharmacy,
+    Admin,
+    Pharmacist,
+    Pharmacy,
+    PharmacyImage,
+    Stock,
+)
 
 
 class AdminRepository(IAdminRepository):
@@ -85,6 +92,4 @@ class AdminRepository(IAdminRepository):
         admin._encrypt_password()
         session.add(admin)
         session.commit()
-        return {
-            "detail": "admin was created with successfuly!"
-        }
+        return {"detail": "admin was created with successfuly!"}

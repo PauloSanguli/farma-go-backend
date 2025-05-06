@@ -1,7 +1,7 @@
-from fastapi.exceptions import HTTPException
 from fastapi import status
+from fastapi.exceptions import HTTPException
 
-from src.domain.security import hash_password, check_password_hashed
+from src.domain.security import check_password_hashed, hash_password
 
 
 class PasswordMixin:
@@ -12,5 +12,8 @@ class PasswordMixin:
 
     def _check_password(self, password: str | None) -> bool:
         if not check_password_hashed(password, self.password):
-            raise HTTPException(detail="Invalid password provided", status_code=status.HTTP_401_UNAUTHORIZED)
+            raise HTTPException(
+                detail="Invalid password provided",
+                status_code=status.HTTP_401_UNAUTHORIZED,
+            )
         return check_password_hashed(password, self.password)
