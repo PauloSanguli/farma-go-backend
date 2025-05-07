@@ -1,1 +1,1 @@
-from .enums import EntityRole, MedicineCategory
+from .enums import EntityRole, MedicineCategory, FieldsAddressLocationiqMapperEnum

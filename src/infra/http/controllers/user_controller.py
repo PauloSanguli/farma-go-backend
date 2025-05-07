@@ -1,13 +1,16 @@
 from fastapi import status
 from fastapi.exceptions import HTTPException
 from sqlmodel import Session, select
+from sqlalchemy import and_
 
 from src.domain.schemas import AuthSchema
 
 from src.infra.configs import get_session
 from src.infra.http.middleware.authenticators import JwtHandler
 from src.infra.http.repositorys import PharmacyRepository
-from src.infra.models import Medicine, Pharmacy, Stock, User, UserSearchHistory
+from src.infra.models import Medicine, Pharmacy, Stock, User, UserSearchHistory, AddressPharmacy
+
+from src.domain.enums import FieldsAddressLocationiqMapperEnum
 
 from src.application.services.geolocation_service import GeolocationService
 
@@ -34,16 +37,27 @@ class UserController:
             latitude=latitude,
             longitude=longitude
         )
-        geolocation_service._retrieve_address()
-        geolocation_service._retrieve_address(api_name="locationiq", debug=True)
-        geolocation_service._retrieve_address(api_name="opencage", debug=True)
+        api_name: str = "locationiq"
+        match api_name:
+            case "locationiq":
+                enum_fields = FieldsAddressLocationiqMapperEnum
+        address_details: dict = geolocation_service._retrieve_address(api_name=api_name)
 
         UserController.regist_history(medicine_name, user_id)
         query = (
             select(Pharmacy)
+            .join(AddressPharmacy, Pharmacy.address_id == AddressPharmacy.id)
             .join(Stock, Pharmacy.stock_id == Stock.id)
             .join(Medicine, Medicine.stock_id == Stock.id)
-            .where(Medicine.name.ilike(f"%{medicine_name}%"))
+            .where(
+                and_(
+                    Medicine.name.ilike(f"%{medicine_name}%"),
+                    AddressPharmacy.city.ilike(f"%{address_details.get(enum_fields.city)}%"),
+                    AddressPharmacy.neighborhood.ilike(f"%{address_details.get(enum_fields.neighborhood)}%"),
+                    AddressPharmacy.state.ilike(f"%{address_details.get(enum_fields.state)}%"),
+                    AddressPharmacy.street.ilike(f"%{address_details.get(enum_fields.street)}%")
+                )
+            )
         )
         result = session.exec(query).all()
         if len(result) == 0:

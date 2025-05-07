@@ -15,8 +15,8 @@ class EntityRole(str, Enum):
     USER = "user"
 
 class FieldsAddressLocationiqMapperEnum(str, Enum):
-    street = "ROAD"
-    neighborhood = "SUBURB"
-    neighborhood = "TOWN"
-    city = "COUNTY"
-    state = "STATE"
+    street = "road"
+    neighborhood = "suburb"
+    # neighborhood = "town"
+    city = "county"
+    state = "state"

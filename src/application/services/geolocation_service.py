@@ -30,18 +30,17 @@ class GeolocationService:
         try:
             response = requests.get(url, timeout=10)
             if response.status_code == 200:
-                data = response.json()
+                data: dict = response.json()
                 if debug:
                     with open(f"examples/{api_name}.json", "w") as file:
                         file.write(json.dumps(data, indent=4))
-                return data
+                return data.get("address")
             else:
                 raise requests.RequestException(f"Status code: {response.status_code}")
         except requests.RequestException as e:
             if retries > 0:
                 return self._retrieve_address(retries - 1, api_name, debug)
-            print(f"Failed to get location from {api_name}: {e}")
-            # raise HTTPException(
-            #     detail=f"Failed to get location from {api_name}: {e}",
-            #     status_code=status.HTTP_400_BAD_REQUEST
-            # )
+            raise HTTPException(
+                detail=f"Failed to get location from {api_name}: {e}",
+                status_code=status.HTTP_400_BAD_REQUEST
+            )
