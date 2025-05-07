@@ -51,7 +51,7 @@ class GeolocationService:
                 raise requests.RequestException(f"Status code: {response.status_code}")
         except requests.RequestException as e:
             if retries > 0:
-                return self._retrieve_address(retries - 1, self.api_name, debug)
+                return self._retrieve_address(retries - 1, debug)
             raise HTTPException(
                 detail=f"Failed to get location from {self.api_name}: {e}",
                 status_code=status.HTTP_400_BAD_REQUEST

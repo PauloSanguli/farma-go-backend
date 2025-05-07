@@ -15,8 +15,8 @@ class AddressPharmacySchema(BaseModel):
 
 class CoordenatesSchema(BaseModel):
     zip_code: str
-    latitude: float
-    longitude: float
+    latitude: Optional[float]
+    longitude: Optional[float]
 
 class PharmacySchema(BaseModel):
     name: str

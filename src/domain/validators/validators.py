@@ -1,8 +1,8 @@
-from src.domain.schemas import AddressPharmacySchema
+from src.domain.schemas import CoordenatesSchema
 from src.application.services.geolocation_service import GeolocationService
 
 
-def validate_location(address_schema: AddressPharmacySchema) -> AddressPharmacySchema:
+def validate_location(address_schema: CoordenatesSchema) -> CoordenatesSchema:
         try:
             lat = float(address_schema.latitude)
             lon = float(address_schema.longitude)
@@ -10,7 +10,6 @@ def validate_location(address_schema: AddressPharmacySchema) -> AddressPharmacyS
                 raise ValueError
         except (TypeError, ValueError):
             location: dict[str, float] = GeolocationService.retrieve_location()
-
             address_schema.latitude = float(location.get("latitude"))
             address_schema.longitude = float(location.get("longitude"))
         return address_schema

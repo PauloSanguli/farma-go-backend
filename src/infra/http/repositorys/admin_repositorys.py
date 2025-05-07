@@ -103,6 +103,7 @@ class AdminRepository(IAdminRepository):
     @staticmethod
     def create_address_pharmacy(address_data: CoordenatesSchema) -> AddressPharmacy:
         address_data = validate_location(address_data)
+        
         geolocation_service = GeolocationService(
             latitude=address_data.latitude,
             longitude=address_data.longitude
