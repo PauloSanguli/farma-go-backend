@@ -19,6 +19,8 @@ from src.infra.models import (
 
 from src.application.services.geolocation_service import GeolocationService
 
+from src.domain.validators.validators import validate_location
+
 
 class AdminRepository(IAdminRepository):
     @staticmethod
@@ -100,6 +102,7 @@ class AdminRepository(IAdminRepository):
 
     @staticmethod
     def create_address_pharmacy(address_data: CoordenatesSchema) -> AddressPharmacy:
+        address_data = validate_location(address_data)
         geolocation_service = GeolocationService(
             latitude=address_data.latitude,
             longitude=address_data.longitude

@@ -11,6 +11,6 @@ def validate_location(address_schema: AddressPharmacySchema) -> AddressPharmacyS
         except (TypeError, ValueError):
             location: dict[str, float] = GeolocationService.retrieve_location()
 
-            address_schema.latitude = location.get("latitude")
-            address_schema.longitude = location.get("longitude")
+            address_schema.latitude = float(location.get("latitude"))
+            address_schema.longitude = float(location.get("longitude"))
         return address_schema
