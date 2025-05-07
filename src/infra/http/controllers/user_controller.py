@@ -5,8 +5,8 @@ from sqlmodel import Session, select
 from src.domain.schemas import AuthSchema
 from src.infra.configs import get_session
 from src.infra.http.middleware.authenticators import JwtHandler
-from src.infra.models import User, Medicine, Stock, Pharmacy, UserSearchHistory
 from src.infra.http.repositorys import PharmacyRepository
+from src.infra.models import Medicine, Pharmacy, Stock, User, UserSearchHistory
 
 
 class UserController:
@@ -23,7 +23,7 @@ class UserController:
             )
         user._check_password(user_data.password)
         return jwt_handler.create_token_user(user.id)
-    
+
     @staticmethod
     def search_medicine_in_pharmacy_stock(medicine_name: str, user_id: str) -> dict:
         session: Session = get_session()
@@ -36,10 +36,7 @@ class UserController:
         )
         result = session.exec(query).all()
         if len(result) == 0:
-            raise HTTPException(
-                status_code=404,
-                detail="Medicine not found"
-            )
+            raise HTTPException(status_code=404, detail="Medicine not found")
         return result
 
     @staticmethod
@@ -56,16 +53,11 @@ class UserController:
         session.add(user)
         session.commit()
         session.refresh(user)
-        return {
-            "detail": 'User data updated'
-        }
-    
+        return {"detail": "User data updated"}
+
     @staticmethod
     def regist_history(query: str, user_id: str) -> None:
         session: Session = get_session()
-        history = UserSearchHistory(
-            query=query,
-            user_id=user_id
-        )
+        history = UserSearchHistory(query=query, user_id=user_id)
         session.add(history)
         session.commit()

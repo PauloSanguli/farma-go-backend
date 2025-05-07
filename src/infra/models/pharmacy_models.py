@@ -91,7 +91,9 @@ class Medicine(SQLModel, table=True):
     description: Optional[str] = Field(default=None, max_length=255)
     price: float = Field(gt=0)
     category: MedicineCategory = Field(sa_column_kwargs={"nullable": False})
-    image_url: Optional[str] = Field(sa_column_kwargs={"nullable": True}, max_length=255)
+    image_url: Optional[str] = Field(
+        sa_column_kwargs={"nullable": True}, max_length=255
+    )
 
     quantity: int = Field(default=1)
 

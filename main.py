@@ -8,8 +8,16 @@ from src.infra.http.routes.admin import (
     admin_routes_get,
     admin_routes_post,
 )
-from src.infra.http.routes.pharmacy import pharmacy_routes_post, pharmacy_routes_get, pharmacy_routes_patch
-from src.infra.http.routes.user import user_routes_get, user_routes_post, user_routes_patch
+from src.infra.http.routes.pharmacy import (
+    pharmacy_routes_get,
+    pharmacy_routes_patch,
+    pharmacy_routes_post,
+)
+from src.infra.http.routes.user import (
+    user_routes_get,
+    user_routes_patch,
+    user_routes_post,
+)
 
 api.include_router(admin_routes_get)
 api.include_router(admin_routes_post)

@@ -30,6 +30,7 @@ class PharmacistSchema(BaseModel):
     license_number: str
     pharmacy_id: str
 
+
 class MedicinestockSchema(BaseModel):
     quantity: int
     medicine_id: str

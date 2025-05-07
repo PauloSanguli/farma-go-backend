@@ -10,7 +10,9 @@ from src.infra.http.exceptions import InvalidTokenProvidedError, PermissionDenie
 
 class JWTPermissionsHandler:
     @classmethod
-    def get_admin_logged(cls, x_acess_token: Annotated[str, Header()]) -> dict[str, str]:
+    def get_admin_logged(
+        cls, x_acess_token: Annotated[str, Header()]
+    ) -> dict[str, str]:
         """metod for get user logged form token"""
         admin_data: dict[str, str] = cls.__decode_token(x_acess_token)
         if EntityRole.ADMIN != admin_data.get("role"):
@@ -26,13 +28,15 @@ class JWTPermissionsHandler:
         return user_data
 
     @classmethod
-    def get_pharmacist_logged(cls, x_acess_token: Annotated[str, Header()]) -> dict[str, str]:
+    def get_pharmacist_logged(
+        cls, x_acess_token: Annotated[str, Header()]
+    ) -> dict[str, str]:
         """metod for get pharmacist logged form token"""
         pharmacist_data: dict[str, str] = cls.__decode_token(x_acess_token)
         if EntityRole.PHARMACIST != pharmacist_data.get("role"):
             raise PermissionDeniedError()
         return pharmacist_data
-    
+
     @classmethod
     def __decode_token(cls, acess_token: str) -> dict[str, str]:
         """Method for decode token"""
@@ -46,7 +50,7 @@ class JWTPermissionsHandler:
             data_decoded: dict[str, str] = jwt.decode(
                 token, os.getenv("SECRET-KEY", ""), ["HS256"]
             )
-        except (jwt.ExpiredSignatureError):
+        except jwt.ExpiredSignatureError:
             raise InvalidTokenProvidedError()
         return data_decoded
 
