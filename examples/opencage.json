@@ -1,0 +1,147 @@
+{
+    "documentation": "https://opencagedata.com/api",
+    "licenses": [
+        {
+            "name": "see attribution guide",
+            "url": "https://opencagedata.com/credits"
+        }
+    ],
+    "rate": {
+        "limit": 2500,
+        "remaining": 2493,
+        "reset": 1746662400
+    },
+    "results": [
+        {
+            "annotations": {
+                "DMS": {
+                    "lat": "8\u00b0 49' 5.08008'' S",
+                    "lng": "13\u00b0 16' 26.97708'' E"
+                },
+                "MGRS": "33LUL1018424822",
+                "Maidenhead": "JI61pe23vp",
+                "Mercator": {
+                    "x": 1477672.767,
+                    "y": -978976.463
+                },
+                "OSM": {
+                    "edit_url": "https://www.openstreetmap.org/edit?way=151230604#map=16/-8.81808/13.27416",
+                    "note_url": "https://www.openstreetmap.org/note/new#map=16/-8.81808/13.27416&layers=N",
+                    "url": "https://www.openstreetmap.org/?mlat=-8.81808&mlon=13.27416#map=16/-8.81808/13.27416"
+                },
+                "UN_M49": {
+                    "regions": {
+                        "AFRICA": "002",
+                        "AO": "024",
+                        "MIDDLE_AFRICA": "017",
+                        "SUB-SAHARAN_AFRICA": "202",
+                        "WORLD": "001"
+                    },
+                    "statistical_groupings": [
+                        "LDC",
+                        "LEDC"
+                    ]
+                },
+                "callingcode": 244,
+                "currency": {
+                    "alternate_symbols": [],
+                    "decimal_mark": ".",
+                    "format": "%n %u",
+                    "html_entity": "",
+                    "iso_code": "AOA",
+                    "iso_numeric": "973",
+                    "name": "Angolan Kwanza",
+                    "smallest_denomination": 10,
+                    "subunit": "C\u00eantimo",
+                    "subunit_to_unit": 100,
+                    "symbol": "Kz",
+                    "symbol_first": 0,
+                    "thousands_separator": ","
+                },
+                "flag": "\ud83c\udde6\ud83c\uddf4",
+                "geohash": "kq3my49yyr5kfxb9mp3u",
+                "qibla": 40.42,
+                "roadinfo": {
+                    "drive_on": "right",
+                    "road": "Rua Tenente Berberan",
+                    "speed_in": "km/h"
+                },
+                "sun": {
+                    "rise": {
+                        "apparent": 1746594720,
+                        "astronomical": 1746590400,
+                        "civil": 1746593400,
+                        "nautical": 1746591900
+                    },
+                    "set": {
+                        "apparent": 1746636900,
+                        "astronomical": 1746641220,
+                        "civil": 1746638220,
+                        "nautical": 1746639720
+                    }
+                },
+                "timezone": {
+                    "name": "Africa/Luanda",
+                    "now_in_dst": 0,
+                    "offset_sec": 3600,
+                    "offset_string": "+0100",
+                    "short_name": "WAT"
+                },
+                "what3words": {
+                    "words": "decimal.website.slurs"
+                }
+            },
+            "bounds": {
+                "northeast": {
+                    "lat": -8.8159527,
+                    "lng": 13.2766652
+                },
+                "southwest": {
+                    "lat": -8.8188815,
+                    "lng": 13.2733172
+                }
+            },
+            "components": {
+                "ISO_3166-1_alpha-2": "AO",
+                "ISO_3166-1_alpha-3": "AGO",
+                "ISO_3166-2": [
+                    "AO-LUA"
+                ],
+                "_category": "commerce",
+                "_normalized_city": "Cuca",
+                "_type": "craft",
+                "continent": "Africa",
+                "country": "Angola",
+                "country_code": "ao",
+                "county": "Municipality of Luanda",
+                "craft": "Cuca",
+                "road": "Rua Tenente Berberan",
+                "state": "Luanda Province",
+                "suburb": "Cuca"
+            },
+            "confidence": 9,
+            "distance_from_q": {
+                "meters": 121
+            },
+            "formatted": "Cuca, Rua Tenente Berberan, Luanda Province, Angola",
+            "geometry": {
+                "lat": -8.8180778,
+                "lng": 13.2741603
+            }
+        }
+    ],
+    "status": {
+        "code": 200,
+        "message": "OK"
+    },
+    "stay_informed": {
+        "blog": "https://blog.opencagedata.com",
+        "mastodon": "https://en.osm.town/@opencage"
+    },
+    "thanks": "For using an OpenCage API",
+    "timestamp": {
+        "created_http": "Wed, 07 May 2025 03:21:06 GMT",
+        "created_unix": 1746588066
+    },
+    "total_results": 1
+}

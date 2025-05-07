@@ -1,0 +1,25 @@
+{
+    "place_id": "37772803",
+    "licence": "https://locationiq.com/attribution",
+    "osm_type": "way",
+    "osm_id": "151230604",
+    "lat": "-8.818077800000001",
+    "lon": "13.27416031940385",
+    "display_name": "Cuca, Rua Tenente Berberan, Cuca, Municipality of Luanda, Luanda Province, Angola",
+    "address": {
+        "brewery": "Cuca",
+        "road": "Rua Tenente Berberan",
+        "suburb": "Cuca",
+        "county": "Municipality of Luanda",
+        "state": "Luanda Province",
+        "country": "Angola",
+        "country_code": "ao",
+        "town": "Cuca"
+    },
+    "boundingbox": [
+        "-8.8188815",
+        "-8.8159527",
+        "13.2733172",
+        "13.2766652"
+    ]
+}

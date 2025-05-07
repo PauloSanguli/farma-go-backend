@@ -17,11 +17,14 @@ async def search_medicine(
         dict[str, str], Depends(JWTPermissionsHandler.get_user_logged)
     ],
     medicine: str,
-    lat: float,
-    lg: float,
+    latitude: float,
+    longitude: float,
 ):
     results: list = UserController.search_medicine_in_pharmacy_stock(
-        medicine, user_logged.get("id")
+        medicine_name=medicine,
+        latitude=latitude,
+        longitude=longitude,
+        user_id=user_logged.get("id")
     )
     return results
 

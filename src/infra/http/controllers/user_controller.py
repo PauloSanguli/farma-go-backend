@@ -3,10 +3,13 @@ from fastapi.exceptions import HTTPException
 from sqlmodel import Session, select
 
 from src.domain.schemas import AuthSchema
+
 from src.infra.configs import get_session
 from src.infra.http.middleware.authenticators import JwtHandler
 from src.infra.http.repositorys import PharmacyRepository
 from src.infra.models import Medicine, Pharmacy, Stock, User, UserSearchHistory
+
+from src.application.services.geolocation_service import GeolocationService
 
 
 class UserController:
@@ -25,8 +28,16 @@ class UserController:
         return jwt_handler.create_token_user(user.id)
 
     @staticmethod
-    def search_medicine_in_pharmacy_stock(medicine_name: str, user_id: str) -> dict:
+    def search_medicine_in_pharmacy_stock(medicine_name: str, latitude: float, longitude: float, user_id: str) -> dict:
         session: Session = get_session()
+        geolocation_service = GeolocationService(
+            latitude=latitude,
+            longitude=longitude
+        )
+        geolocation_service._retrieve_address()
+        geolocation_service._retrieve_address(api_name="locationiq", debug=True)
+        geolocation_service._retrieve_address(api_name="opencage", debug=True)
+
         UserController.regist_history(medicine_name, user_id)
         query = (
             select(Pharmacy)
