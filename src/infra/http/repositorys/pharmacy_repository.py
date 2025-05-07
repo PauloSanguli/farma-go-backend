@@ -29,7 +29,7 @@ class PharmacyRepository:
     def retrieve_pharmacy_by_id(pharmacy_id: str) -> dict:
         session: Session = get_session()
         query = select(Pharmacy, Stock, AddressPharmacy).where(
-            Pharmacy.stock_id == Stock.id, Pharmacy.id == pharmacy_id
+            Pharmacy.stock_id == Stock.id, Pharmacy.id == pharmacy_id, Pharmacy.address_id==AddressPharmacy.id
         )
         result = session.exec(query).first()
         if not result:

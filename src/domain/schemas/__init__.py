@@ -3,5 +3,6 @@ from .pharmacy_schemas import (
     MedicinestockSchema,
     PharmacistSchema,
     PharmacySchema,
+    CoordenatesSchema
 )
 from .user_schemas import AuthSchema, UserSchema, UserUpdateSchema

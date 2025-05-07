@@ -10,7 +10,7 @@ from src.infra.http.middleware.authenticators import JwtHandler
 from src.infra.http.repositorys import PharmacyRepository
 from src.infra.models import Medicine, Pharmacy, Stock, User, UserSearchHistory, AddressPharmacy
 
-from src.domain.enums import FieldsAddressLocationiqMapperEnum
+from src.application.utils.mappers_util import retrieve_enum_mapper_for_api
 
 from src.application.services.geolocation_service import GeolocationService
 
@@ -35,13 +35,10 @@ class UserController:
         session: Session = get_session()
         geolocation_service = GeolocationService(
             latitude=latitude,
-            longitude=longitude
+            longitude=longitude,
+            api_name="locationiq"
         )
-        api_name: str = "locationiq"
-        match api_name:
-            case "locationiq":
-                enum_fields = FieldsAddressLocationiqMapperEnum
-        address_details: dict = geolocation_service._retrieve_address(api_name=api_name)
+        address_details: dict = geolocation_service._retrieve_address()
 
         UserController.regist_history(medicine_name, user_id)
         query = (
@@ -51,11 +48,13 @@ class UserController:
             .join(Medicine, Medicine.stock_id == Stock.id)
             .where(
                 and_(
+                    Pharmacy.opened==True,
                     Medicine.name.ilike(f"%{medicine_name}%"),
-                    AddressPharmacy.city.ilike(f"%{address_details.get(enum_fields.city)}%"),
-                    AddressPharmacy.neighborhood.ilike(f"%{address_details.get(enum_fields.neighborhood)}%"),
-                    AddressPharmacy.state.ilike(f"%{address_details.get(enum_fields.state)}%"),
-                    AddressPharmacy.street.ilike(f"%{address_details.get(enum_fields.street)}%")
+                    Medicine.quantity>0,
+                    AddressPharmacy.city.ilike(f"%{address_details.get('city')}%"),
+                    AddressPharmacy.neighborhood.ilike(f"%{address_details.get('neighborhood')}%"),
+                    AddressPharmacy.state.ilike(f"%{address_details.get('state')}%"),
+                    AddressPharmacy.street.ilike(f"%{address_details.get('street')}%")
                 )
             )
         )

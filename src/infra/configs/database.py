@@ -10,7 +10,7 @@ def create_tables():
 
 def get_engine_connection():
     engine = create_engine(
-        f"postgresql://{getenv('DB-USER')}:{getenv('DB-PASSWORD')}@{getenv('DB-HOST')}:{getenv('DB-PORT')}/{getenv('DB-NAME')}",
+        f"postgresql://{getenv('DB-USER')}:{getenv('DB-PASSWORD')}@{getenv('DB-HOST')}:{getenv('DB-PORT')}/{getenv('DB-NAME')}"
         # echo=True,
     )
     return engine

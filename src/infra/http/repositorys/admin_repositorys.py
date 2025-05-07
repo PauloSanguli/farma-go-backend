@@ -6,7 +6,7 @@ from sqlalchemy.orm import selectinload
 from sqlmodel import Session, delete, select
 
 from src.application.repositorys import IAdminRepository
-from src.domain.schemas import PharmacySchema
+from src.domain.schemas import PharmacySchema, CoordenatesSchema
 from src.infra.configs import get_session
 from src.infra.models import (
     AddressPharmacy,
@@ -17,15 +17,18 @@ from src.infra.models import (
     Stock,
 )
 
+from src.application.services.geolocation_service import GeolocationService
+
 
 class AdminRepository(IAdminRepository):
     @staticmethod
     def regist_pharmacy(
         pharmacy: Pharmacy,
-        address: AddressPharmacy,
+        address_data: CoordenatesSchema,
         pharmacist: Pharmacist,
     ) -> dict[str, str]:
         try:
+            address: AddressPharmacy = AdminRepository.create_address_pharmacy(address_data)
             session: Session = get_session()
 
             stock = Stock(pharmacy_id=pharmacy.id)
@@ -94,3 +97,21 @@ class AdminRepository(IAdminRepository):
         session.add(admin)
         session.commit()
         return {"detail": "admin was created with successfuly!"}
+
+    @staticmethod
+    def create_address_pharmacy(address_data: CoordenatesSchema) -> AddressPharmacy:
+        geolocation_service = GeolocationService(
+            latitude=address_data.latitude,
+            longitude=address_data.longitude
+        )
+        address_details: dict = geolocation_service._retrieve_address()
+        address = AddressPharmacy(
+            city=address_details.get("city"),
+            neighborhood=address_details.get("neighborhood"),
+            street=address_details.get("street"),
+            state=address_details.get("state"),
+            zip_code=address_data.zip_code,
+            latitude=address_data.latitude,
+            longitude=address_data.longitude
+        )
+        return address

@@ -13,6 +13,10 @@ class AddressPharmacySchema(BaseModel):
     latitude: Optional[float]
     longitude: Optional[float]
 
+class CoordenatesSchema(BaseModel):
+    zip_code: str
+    latitude: float
+    longitude: float
 
 class PharmacySchema(BaseModel):
     name: str

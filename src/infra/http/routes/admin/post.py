@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 
-from src.domain.schemas import AuthSchema
+from src.domain.schemas import AuthSchema, CoordenatesSchema
 from src.infra.http.controllers import AdminController
 from src.infra.http.middleware.authorizators import JWTPermissionsHandler
 from src.infra.http.repositorys import AdminRepository
@@ -16,7 +16,7 @@ app = APIRouter(prefix="/admin", tags=["Admin"])
 async def regist_pharmacy(
     admin_logged: Annotated[dict, Depends(JWTPermissionsHandler.get_admin_logged)],
     pharmacy: Pharmacy,
-    address: AddressPharmacy,
+    address: CoordenatesSchema,
     pharmacist: Pharmacist,
 ):
     response: dict[str, str] = AdminRepository.regist_pharmacy(
