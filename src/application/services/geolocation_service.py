@@ -56,3 +56,28 @@ class GeolocationService:
                 detail=f"Failed to get location from {self.api_name}: {e}",
                 status_code=status.HTTP_400_BAD_REQUEST
             )
+
+    @staticmethod
+    def retrieve_location(retrys: int = 3, debug: bool = False) -> dict[str, float] | None:
+        try:
+            response = requests.get("https://ipinfo.io/json", timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                location = data.get("loc", None)
+                if location:    
+                    latitude, longitude = map(float, location.split(","))
+                    return {
+                        "latitude": latitude,
+                        "longitude": longitude
+                    }
+            raise HTTPException(
+                detail="Error trying getting the location of pharmacy",
+                status_code=status.HTTP_400_BAD_REQUEST
+            )
+        except requests.RequestException as e:
+            if retrys > 0:
+                return GeolocationService.retrieve_location(retrys - 1, debug)
+        raise HTTPException(
+            detail="Location dont getted for pharmacy",
+            status_code=status.HTTP_400_BAD_REQUEST
+        )

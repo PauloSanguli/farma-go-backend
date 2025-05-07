@@ -21,6 +21,8 @@ class AddressPharmacy(SQLModel, table=True):
 
     pharmacy: Optional["Pharmacy"] = Relationship(back_populates="address")
 
+        
+
 
 class PharmacyImage(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
