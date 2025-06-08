@@ -47,6 +47,7 @@ class AdminRepository(IAdminRepository):
                 status_code=status.HTTP_400_BAD_REQUEST,
             )
         session.commit()
+        session.close()
         return {"detail": "Pharmacy created with successfuly"}
 
     @staticmethod
@@ -54,6 +55,7 @@ class AdminRepository(IAdminRepository):
         session: Session = get_session()
         statement = select(Pharmacy).options(selectinload(Pharmacy.address))
         pharmacys = session.exec(statement).all()
+        session.close()
         return pharmacys
 
     @staticmethod
@@ -68,6 +70,7 @@ class AdminRepository(IAdminRepository):
                 status_code=status.HTTP_404_NOT_FOUND,
             )
         session.delete(pharmacy)
+        session.close()
         return {"detail": "Pharmacy was sucessfuly deleted!"}
 
     @staticmethod
@@ -90,6 +93,7 @@ class AdminRepository(IAdminRepository):
                 detail=f"An error occured: {e._message()}",
                 status_code=status.HTTP_400_BAD_REQUEST,
             )
+        session.close()
         return {"detail": "Pharmacist was sucessufuly created!"}
 
     @staticmethod
@@ -98,12 +102,13 @@ class AdminRepository(IAdminRepository):
         admin._encrypt_password()
         session.add(admin)
         session.commit()
+        session.close()
         return {"detail": "admin was created with successfuly!"}
 
     @staticmethod
     def create_address_pharmacy(address_data: CoordenatesSchema) -> AddressPharmacy:
         address_data = validate_location(address_data)
-        
+
         geolocation_service = GeolocationService(
             latitude=address_data.latitude,
             longitude=address_data.longitude

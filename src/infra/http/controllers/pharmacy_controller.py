@@ -7,7 +7,7 @@ from src.domain.schemas import AuthSchema, MedicinestockSchema
 from src.infra.configs import get_session
 from src.infra.http.middleware.authenticators import JwtHandler
 from src.infra.http.repositorys import PharmacyRepository
-from src.infra.models import Medicine, Pharmacist, Pharmacy, Stock
+from src.infra.models import Medicine, Pharmacist, Pharmacy, Stock, PharmacyImage, AddressPharmacy
 
 
 class PharmacyController:
@@ -73,3 +73,14 @@ class PharmacyController:
             raise HTTPException(status_code=404, detail="Medicine not found")
 
         return result
+
+    @staticmethod
+    def retrieve_pharmacy_address_image(pharmacy: Pharmacy) -> PharmacyImage:
+        session: Session = get_session()
+        pharmacy_image = session.exec(select(PharmacyImage).where(PharmacyImage.pharmacy_id==pharmacy.id)).first()
+        pharmacy_address = session.exec(select(AddressPharmacy).where(AddressPharmacy.id==pharmacy.address_id)).first()
+        return {
+            "address": pharmacy_address,
+            "image": pharmacy_image or {"image_url": "https://www.farmaciapopular.co.ao/wp-content/uploads/banner-farmacia.jpg"},
+            "pharmacy": pharmacy
+        }

@@ -41,6 +41,13 @@ class GeolocationService:
                     with open(f"examples/{self.api_name}.json", "w") as file:
                         file.write(json.dumps(data, indent=4))
                 address: dict = data.get("address")
+
+                print({
+                    "city": address.get(self.enum_fields.city),
+                    "street": address.get(self.enum_fields.street),
+                    "neighborhood": address.get(self.enum_fields.neighborhood),
+                    "state": address.get(self.enum_fields.state)
+                })
                 return {
                     "city": address.get(self.enum_fields.city),
                     "street": address.get(self.enum_fields.street),

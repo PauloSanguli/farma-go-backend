@@ -23,6 +23,7 @@ class PharmacyRepository:
             return {"detail": "This medicine already stay on that stock"}
         session.add(medicine)
         session.commit()
+        session.close()
         return {"detail": "The medicine was already added to stock"}
 
     @staticmethod
@@ -32,6 +33,8 @@ class PharmacyRepository:
             Pharmacy.stock_id == Stock.id, Pharmacy.id == pharmacy_id, Pharmacy.address_id==AddressPharmacy.id
         )
         result = session.exec(query).first()
-        if not result:
+        response = {"pharmacy": result[0], "stock": result[1], "address": result[2]} if result else None
+        session.close()
+        if not response:
             raise HTTPException(status_code=404, detail="Pharmacy not found")
-        return {"pharmacy": result[0], "stock": result[1], "address": result[2]}
+        return response

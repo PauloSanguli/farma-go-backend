@@ -50,7 +50,7 @@ class JWTPermissionsHandler:
             data_decoded: dict[str, str] = jwt.decode(
                 token, os.getenv("SECRET-KEY", ""), ["HS256"]
             )
-        except jwt.ExpiredSignatureError:
+        except (jwt.ExpiredSignatureError, jwt.exceptions.InvalidSignatureError):
             raise InvalidTokenProvidedError()
         return data_decoded
 

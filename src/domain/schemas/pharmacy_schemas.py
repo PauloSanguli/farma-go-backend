@@ -5,11 +5,11 @@ from pydantic import BaseModel
 
 
 class AddressPharmacySchema(BaseModel):
-    street: str
+    street: Optional[str]
     neighborhood: str
-    city: str
-    state: str
-    zip_code: str
+    city: Optional[str]
+    state: Optional[str]
+    zip_code: Optional[str]
     latitude: Optional[float]
     longitude: Optional[float]
 
