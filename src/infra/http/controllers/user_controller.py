@@ -58,6 +58,7 @@ class UserController:
                 )
             )
             result = session.exec(query).all()
+            session.close()
             if not result:
                 raise HTTPException(status_code=404, detail="Medicine not found")
             return result
@@ -76,6 +77,7 @@ class UserController:
             session.add(user)
             session.commit()
             session.refresh(user)
+            session.close()
             return {"detail": "User data updated"}
 
     @staticmethod
@@ -84,5 +86,6 @@ class UserController:
             history = UserSearchHistory(query=query, user_id=user_id)
             session.add(history)
             session.commit()
+            session.close()
 
     

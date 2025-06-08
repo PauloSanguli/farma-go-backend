@@ -27,6 +27,7 @@ class PharmacyController:
             )
         pharmacist._check_password(pharmacist_data.password)
         token: str = jwt_handler.create_token_pharmacist(pharmacist)
+        session.close()
         return {"token": token}
 
     def update_medicine_stock(
@@ -54,6 +55,7 @@ class PharmacyController:
         medicine.quantity = medicine_data.quantity
         session.commit()
         session.refresh(medicine)
+        session.close()
 
         return {
             "message": "Medicine stock updated successfully",
@@ -68,7 +70,7 @@ class PharmacyController:
             Medicine.name.ilike(f"%{medicine_name}%"), Medicine.stock_id == stock.id
         )
         result = session.exec(query).all()
-
+        session.close()
         if not result:
             raise HTTPException(status_code=404, detail="Medicine not found")
 
@@ -79,6 +81,7 @@ class PharmacyController:
         session: Session = get_session()
         pharmacy_image = session.exec(select(PharmacyImage).where(PharmacyImage.pharmacy_id==pharmacy.id)).first()
         pharmacy_address = session.exec(select(AddressPharmacy).where(AddressPharmacy.id==pharmacy.address_id)).first()
+        session.close()
         return {
             "address": pharmacy_address,
             "image": pharmacy_image or {"image_url": "https://www.farmaciapopular.co.ao/wp-content/uploads/banner-farmacia.jpg"},

@@ -21,4 +21,5 @@ class AdminController:
                 status_code=status.HTTP_404_NOT_FOUND,
             )
         admin._check_password(admin_data.password)
+        session.close()
         return jwt_handler.create_token_admin(admin.id)
