@@ -1,0 +1,7 @@
+// Fetch location by lat and lg
+curl "https://us1.locationiq.com/v1/reverse?key=YOUR_API_KEY&lat=-8.839987&lon=13.234567&format=json"
+
+Cuca coordinates
+latitude: -8.817041
+longitude: 13.2744967
+token: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjoiZWI4ZWM4NjQtY2FkNy00MDJmLTk0ZDEtZTg5Njk4OTQyMjU1IiwiZXhwIjoxNzQ2NjcxOTE5fQ.0-h1bgrtlVEm5QPxuuNxSygNa2vjRlKMmzcYV6V4bjs
