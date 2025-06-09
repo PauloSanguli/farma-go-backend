@@ -18,10 +18,10 @@ class UserRepository:
         session.close()
         return {"detail": "User created with sucessfuly"}
 
-    def retrieve_profile_info(user_id: str) -> User:
+    def retrieve_profile_info(user_id: str, action: str = "user-data") -> User:
         session: Session = get_session()
         user = session.get(User, user_id)
         user.image_url = "https://cdn.britannica.com/74/219774-050-E0858F86/Michael-B-Jordan-2019.jpg"
-        result = user.search_history
+        result = user.search_history if action == "search-history" else user
         session.close()
         return result

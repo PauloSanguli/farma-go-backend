@@ -17,6 +17,7 @@ from src.infra.http.routes.user import (
     user_routes_get,
     user_routes_patch,
     user_routes_post,
+    user_routes_delete
 )
 
 api.include_router(admin_routes_get)
@@ -30,6 +31,7 @@ api.include_router(pharmacy_routes_patch)
 api.include_router(user_routes_get)
 api.include_router(user_routes_post)
 api.include_router(user_routes_patch)
+api.include_router(user_routes_delete)
 
 load_dotenv()
 

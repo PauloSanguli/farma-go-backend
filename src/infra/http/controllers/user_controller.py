@@ -1,6 +1,6 @@
 from fastapi import status
 from fastapi.exceptions import HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session, select, delete
 from sqlalchemy import and_
 
 from src.domain.schemas import AuthSchema
@@ -30,7 +30,16 @@ class UserController:
             return jwt_handler.create_token_user(user.id)
 
     @staticmethod
-    def search_medicine_in_pharmacy_stock(medicine_name: str, latitude: float, longitude: float, user_id: str) -> list:
+    def search_medicine_in_pharmacy_stock(
+        medicine_name: str,
+        latitude: float,
+        longitude: float,
+        user_id: str,
+        price: float | None,
+        category: str | None,
+        avaliation: int | None,
+        nearby_pharmacys: bool
+    ) -> list:
         geolocation_service = GeolocationService(
             latitude=latitude,
             longitude=longitude,
@@ -38,30 +47,57 @@ class UserController:
         )
         address_details: dict = geolocation_service._retrieve_address()
 
-        UserController.regist_history(medicine_name, user_id)
+        if medicine_name or category:
+            UserController.regist_history(medicine_name or f"{category}, {price}", user_id)
 
         with get_session() as session:
+            filters = [
+                Pharmacy.opened == True,
+                Medicine.quantity > 0,
+            ]
+            if medicine_name is not None and medicine_name.strip() != "":
+                filters.append(Medicine.name.ilike(f"%{medicine_name}%"))
+
+            if nearby_pharmacys:
+                filters.extend([
+                    AddressPharmacy.city.ilike(f"%{address_details.get('city')}%"),
+                    AddressPharmacy.neighborhood.ilike(f"%{address_details.get('neighborhood')}%"),
+                    AddressPharmacy.state.ilike(f"%{address_details.get('state')}%"),
+                ])
+
+            if price is not None:
+                filters.append(Medicine.price <= price)
+
+            if category is not None and category.strip() != "":
+                filters.append(Medicine.category == category.upper())
+
+
+            # if avaliation is not None:
+            #     filters.append(Pharmacy.avaliation >= avaliation)
+
             query = (
                 select(Pharmacy)
                 .join(AddressPharmacy, Pharmacy.address_id == AddressPharmacy.id)
                 .join(Stock, Pharmacy.stock_id == Stock.id)
                 .join(Medicine, Medicine.stock_id == Stock.id)
-                .where(
-                    and_(
-                        Pharmacy.opened == True,
-                        Medicine.name.ilike(f"%{medicine_name}%"),
-                        Medicine.quantity > 0,
-                        AddressPharmacy.city.ilike(f"%{address_details.get('city')}%"),
-                        AddressPharmacy.neighborhood.ilike(f"%{address_details.get('neighborhood')}%"),
-                        AddressPharmacy.state.ilike(f"%{address_details.get('state')}%"),
-                    )
-                )
+                .where(and_(*filters))
             )
+
             result = session.exec(query).all()
-            session.close()
+
+            # Ordena pelas farmácias mais próximas, se solicitado
+            # if nearby_pharmacys:
+            #     result.sort(key=lambda pharmacy: GeolocationService.calculate_distance(
+            #         latitude, longitude,
+            #         pharmacy.address.latitude,
+            #         pharmacy.address.longitude
+            #     ))
+
             if not result:
                 raise HTTPException(status_code=404, detail="Medicine not found")
+
             return result
+
 
     @staticmethod
     def update_user_partial(user_id: str, data: dict) -> dict[str, str]:
@@ -88,4 +124,11 @@ class UserController:
             session.commit()
             session.close()
 
+    @staticmethod
+    def clean_history_search(user_id: str) -> None:
+        session: Session = get_session()
+        query = delete(UserSearchHistory).where(UserSearchHistory.user_id==user_id)
+        session.exec(query)
+        session.commit()
+        session.close()
     
