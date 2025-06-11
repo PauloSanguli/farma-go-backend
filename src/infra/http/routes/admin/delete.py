@@ -16,3 +16,10 @@ def remove_pharmacy(
     uuid: str,
 ):
     return AdminRepository.delete_pharmacy(pharmacy_id=uuid)
+
+@app.delete("/pharmacist")
+def remove_pharmacist(
+    admin_logged: Annotated[dict, Depends(JWTPermissionsHandler.get_admin_logged)],
+    uuid: str
+):
+    return AdminRepository.delete_pharmacist(uuid)

@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 
-from src.domain.schemas import AuthSchema, CoordenatesSchema
+from src.domain.schemas import AuthSchema, CoordenatesSchema, PharmacySchema
 from src.infra.http.controllers import AdminController
 from src.infra.http.middleware.authorizators import JWTPermissionsHandler
 from src.infra.http.repositorys import AdminRepository
@@ -44,3 +44,32 @@ def admin_login(admin: AuthSchema):
 def create_admin(admin: Admin):
     response: dict[str, str] = AdminRepository.create_admin(admin)
     return JSONResponse(content=response, status_code=status.HTTP_201_CREATED)
+
+
+
+
+##
+@app.patch("/pharmacy")
+def update_pharmacy(
+    admin_logged: Annotated[dict, Depends(JWTPermissionsHandler.get_admin_logged)],
+    pharmacy: PharmacySchema,
+    id: str
+):
+    response = AdminRepository.update_pharmacy(pharmacy, id)
+    return JSONResponse(
+        content=response,
+        status_code=200
+    )
+
+@app.patch("/pharmacist")
+def update_pharmacist(
+    admin_logged: Annotated[dict, Depends(JWTPermissionsHandler.get_admin_logged)],
+    pharmacist: Pharmacist,
+    id: str
+):
+    response = AdminRepository.update_pharmacist(pharmacist, id)
+    return JSONResponse(
+        content=response,
+        status_code=200
+    )
+

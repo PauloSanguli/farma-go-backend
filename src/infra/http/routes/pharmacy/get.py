@@ -54,8 +54,8 @@ async def retrieve_pharmacy_stock(
     result: dict = PharmacyRepository.retrieve_pharmacy_by_id(
         pharmacist_logged.get("tennant")
     )
-    stock: Stock = result.get("stock")
-    return stock.medicines
+    stock: any = result.get("medicines")
+    return stock
 
 
 @app.get("/search-medicine/")

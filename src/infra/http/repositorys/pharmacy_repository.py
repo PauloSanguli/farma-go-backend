@@ -33,7 +33,7 @@ class PharmacyRepository:
             Pharmacy.stock_id == Stock.id, Pharmacy.id == pharmacy_id, Pharmacy.address_id==AddressPharmacy.id
         )
         result = session.exec(query).first()
-        response = {"pharmacy": result[0], "stock": result[1], "address": result[2]} if result else None
+        response = {"pharmacy": result[0], "stock": result[1], "address": result[2], "medicines": result[1].medicines} if result else None
         session.close()
         if not response:
             raise HTTPException(status_code=404, detail="Pharmacy not found")
