@@ -48,7 +48,7 @@ class JWTPermissionsHandler:
             cls.__raise_exception_http("invalid token bearer", 401)
         try:
             data_decoded: dict[str, str] = jwt.decode(
-                token, os.getenv("SECRET-KEY", ""), ["HS256"]
+                token, os.getenv("SECRET_KEY", ""), ["HS256"]
             )
         except (jwt.ExpiredSignatureError, jwt.exceptions.InvalidSignatureError):
             raise InvalidTokenProvidedError()
