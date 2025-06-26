@@ -18,7 +18,7 @@ class JwtHandler:
             payload["exp"] = datetime.utcnow() + timedelta(days=1)
             token = jwt.encode(payload, key_app)
         except Exception as e:
-            raise HTTPException(status_code=400, detail="error creating the token")
+            raise HTTPException(status_code=400, detail=str(e))
         return token
 
     @classmethod
