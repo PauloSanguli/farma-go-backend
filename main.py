@@ -36,4 +36,4 @@ api.include_router(user_routes_delete)
 load_dotenv()
 
 if __name__ == "__main__":
-    uvicorn.run(api, port=3435, reload=True)
+    uvicorn.run(api, port=3435)
