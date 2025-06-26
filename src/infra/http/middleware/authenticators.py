@@ -17,7 +17,7 @@ class JwtHandler:
             key_app = os.getenv("SECRET-KEY", "")
             payload["exp"] = datetime.utcnow() + timedelta(days=1)
             token = jwt.encode(payload, key_app)
-        except jwt.exceptions.PyJWTError:
+        except Exception as e:
             raise HTTPException(status_code=400, detail="error creating the token")
         return token
 
