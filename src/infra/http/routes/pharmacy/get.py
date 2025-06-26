@@ -12,7 +12,7 @@ from src.domain.schemas import (
 )
 from src.infra.http.controllers import PharmacyController
 from src.infra.http.middleware.authorizators import JWTPermissionsHandler
-from src.infra.http.repositorys import PharmacyRepository
+from src.infra.http.repositorys import PharmacyRepository, AdminRepository
 from src.infra.models import AddressPharmacy, Medicine, Pharmacy, Stock
 
 app = APIRouter(prefix="/pharmacy", tags=["Pharmacy"])
@@ -69,3 +69,12 @@ async def search_medicine_in_pharmacy(
         pharmacist_logged.get("tennant"), medicine
     )
     return results
+
+@app.get("/pharmacists")
+def retrieve_pharmacist(
+    pharmacist_logged: Annotated[
+        dict[str, str], Depends(JWTPermissionsHandler.get_pharmacist_logged)
+    ]
+):
+    AdminRepository.retrieve_pharmacist(id)
+    return 

@@ -41,7 +41,8 @@ def create_tables():
 
 def get_engine_connection():
     engine = create_engine(
-        f"postgresql://{getenv('DB_USER')}:{getenv('DB_PASSWORD')}@{getenv('DB_HOST')}:{getenv('DB_PORT')}/{getenv('DB_NAME')}",
+        getenv("DB_URL"),
+        # f"postgresql://{getenv('DB_USER')}:{getenv('DB_PASSWORD')}@{getenv('DB_HOST')}:{getenv('DB_PORT')}/{getenv('DB_NAME')}",
         pool_size=10,
         max_overflow=5,
         pool_timeout=30,

@@ -20,5 +20,4 @@ api.add_middleware(
 @api.on_event("startup")
 def on_startup():
     load_dotenv()
-    print(getenv("DB_PORT"))
     create_tables()

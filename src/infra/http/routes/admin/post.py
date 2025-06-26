@@ -1,5 +1,6 @@
-from typing import Annotated
+from typing import Annotated, Optional
 
+from fastapi import UploadFile
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 
@@ -11,17 +12,22 @@ from src.infra.models import AddressPharmacy, Admin, Pharmacist, Pharmacy
 
 app = APIRouter(prefix="/admin", tags=["Admin"])
 
-
 @app.post("/pharmacy")
 async def regist_pharmacy(
     admin_logged: Annotated[dict, Depends(JWTPermissionsHandler.get_admin_logged)],
     pharmacy: Pharmacy,
     address: CoordenatesSchema,
     pharmacist: Pharmacist,
+    # files: list[UploadFile],
+    # urls: list[str] = None
 ):
     response: dict[str, str] = AdminRepository.regist_pharmacy(
         pharmacy, address, pharmacist
     )
+    # images_name: list[str] = [image.filename for image in files]
+    # return JSONResponse(
+    #     content={"detal": images_name}
+    # )
     return JSONResponse(content=response, status_code=status.HTTP_201_CREATED)
 
 
