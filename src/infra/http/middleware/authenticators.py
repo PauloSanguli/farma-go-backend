@@ -14,7 +14,7 @@ class JwtHandler:
     @classmethod
     def encode_token_for_entity(cls, payload: dict[str, str]) -> str:
         try:
-            key_app = os.getenv("SECRET-KEY", "")
+            key_app = os.getenv("SECRET_KEY", "")
             payload["exp"] = datetime.utcnow() + timedelta(days=1)
             token = jwt.encode(payload, key_app)
         except Exception as e:
