@@ -1,18 +1,13 @@
-import requests
+import jwt
+from datetime import datetime, timedelta
 
-def get_location():
-    try:
-        response = requests.get("https://ipinfo.io/json")
-        data = response.json()
-        loc = data.get("loc", "")  # retorna algo como "latitude,longitude"
-        if loc:
-            latitude, longitude = map(float, loc.split(","))
-            return latitude, longitude
-        else:
-            return None, None
-    except Exception as e:
-        print("Erro ao obter localização:", e)
-        return None, None
+SECRET_KEY = "meusegredo123"
+ALGORITHM = "HS256"
 
-lat, lon = get_location()
-print(f"Latitude: {lat}, Longitude: {lon}")
+payload = {
+    "sub": "usuario123",
+    "exp": datetime.utcnow() + timedelta(minutes=5)
+}
+
+token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+print(token)

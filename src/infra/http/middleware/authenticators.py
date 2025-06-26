@@ -7,7 +7,6 @@ from fastapi import HTTPException
 from src.domain.enums import EntityRole
 from src.infra.models import Pharmacist
 
-
 class JwtHandler:
     """"""
 
